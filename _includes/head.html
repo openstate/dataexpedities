@@ -1,6 +1,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ page.title }}</title>
+<link rel="icon" type="image/png" href="{{ '/assets/favicon.png' | relative_url }}">
 {% assign og_title = page.title | default: site.title %}
 {% assign og_description = page.description | default: site.description %}
 {% assign og_url = page.url | absolute_url %}
