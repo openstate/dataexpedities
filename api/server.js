@@ -10,6 +10,50 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Launch page: show only the OG image when SHOW_LAUNCH_PAGE=ON
+if (process.env.SHOW_LAUNCH_PAGE === 'ON') {
+  app.use((req, res, next) => {
+    // Allow the image and favicon to be served normally
+    if (req.path === '/assets/og-image.png' || req.path === '/assets/favicon.png') {
+      return next();
+    }
+    res.send(`<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>data/expedities</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <meta property="og:title" content="data/expedities">
+  <meta property="og:description" content="Journalistieke hackathons met CBS data">
+  <meta property="og:image" content="${process.env.SITE_URL || ''}/assets/og-image.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="${process.env.SITE_URL || ''}/assets/og-image.png">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f2e9e7;
+    }
+    img {
+      max-width: 90vw;
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <img src="/assets/og-image.png" alt="data/expedities">
+</body>
+</html>`);
+  });
+}
+
 // Serve Jekyll _site as static files
 app.use(express.static(path.join(__dirname, '..', '_site')));
 

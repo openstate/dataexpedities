@@ -8,4 +8,5 @@ services:
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - FROM_EMAIL=${FROM_EMAIL}
       - PORT=3000
+      - SHOW_LAUNCH_PAGE=${SHOW_LAUNCH_PAGE:-OFF}
     restart: unless-stopped
