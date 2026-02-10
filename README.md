@@ -1,5 +1,7 @@
 # data/expedities
 
+![data/expedities](assets/og-image.png)
+
 Journalistieke hackathons met CBS data. Een initiatief van Stichting Momus, Open State Foundation en het CBS.
 
 ## Project overview
