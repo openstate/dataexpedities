@@ -40,9 +40,7 @@ if (process.env.SHOW_LAUNCH_PAGE === 'ON') {
       background: #f2e9e7;
     }
     img {
-      max-width: 90vw;
-      max-height: 80vh;
-      width: auto;
+      max-width: 40vw;
       height: auto;
     }
   </style>
