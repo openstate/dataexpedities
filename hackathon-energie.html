@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hackathon #2: De rekening van de energietransitie — data/expedities</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'de-bg': '#f2e9e7',
+            'de-purple': '#5d00ff',
+            'de-purple-light': 'rgba(93, 0, 255, 0.06)',
+            'de-black-light': 'rgba(0, 0, 0, 0.06)',
+          },
+          fontFamily: {
+            'sans': ['"Public Sans"', 'sans-serif'],
+            'mono': ['"IBM Plex Mono"', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    .connect-t-vertical {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent 0%, black 50%, transparent 100%);
+    }
+    .connect-t-horizontal {
+      width: 20px;
+      height: 1px;
+      background: linear-gradient(to right, black 0%, transparent 100%);
+    }
+    /* Hackathons sub-dropdown */
+    .hackathons-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 20px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f2e9e7;
+      border: 1px solid rgba(26, 26, 26, 0.7);
+      min-width: 200px;
+      z-index: 40;
+      padding: 4px 0;
+    }
+    .hackathons-dropdown::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      height: 20px;
+    }
+    .hackathons-trigger:hover .hackathons-dropdown,
+    .hackathons-trigger.sub-open .hackathons-dropdown {
+      display: block;
+    }
+    /* Mobile hamburger menu */
+    .mobile-menu-panel {
+      display: none;
+    }
+    .mobile-menu-panel.open {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-de-bg font-sans text-black antialiased">
+  <div class="max-w-[1728px] mx-auto relative min-h-screen">
+
+    <!-- ====== MATRIX PATTERN (left column) ====== -->
+    <div id="matrix-pattern" class="hidden lg:block absolute left-[14px] top-[4px] z-0 pointer-events-none">
+      <svg width="83" height="713" viewBox="0 0 83 713" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+
+    <!-- ====== LEFT VERTICAL LINE ====== -->
+    <div class="hidden md:block absolute md:left-[60px] lg:left-[111px] top-0 bottom-0 w-px z-10" style="background: #cecece;"></div>
+
+    <!-- ====== HEADER / LOGO ====== -->
+    <header class="relative pt-[38px] pb-10 pl-6 md:pl-20 lg:pl-[157px] pr-[90px] md:pr-0">
+      <div class="relative max-w-full overflow-hidden origin-top-left scale-[0.78] md:scale-100" style="width: 367px; height: 50px;">
+        <a href="index.html">
+          <svg class="absolute left-0 top-[2px]" width="97" height="36" viewBox="0 0 96.7102 36.002" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M83.3152 36.002C81.5919 36.002 80.0565 35.6887 78.7092 35.062C77.3932 34.404 76.3435 33.464 75.5602 32.242C74.7769 31.02 74.3852 29.5317 74.3852 27.777C74.3852 25.7403 74.8709 24.1267 75.8422 22.936C76.8449 21.7453 78.1452 20.8523 79.7432 20.257C81.3412 19.6617 83.0645 19.27 84.9132 19.082C86.7932 18.8627 88.6105 18.7373 90.3652 18.706V24.064C87.0752 24.0013 84.6782 24.2677 83.1742 24.863C81.7015 25.427 80.9652 26.3357 80.9652 27.589C80.9652 28.5603 81.3099 29.2653 81.9992 29.704C82.7199 30.1113 83.5815 30.315 84.5842 30.315C85.5242 30.315 86.4329 30.1583 87.3102 29.845C88.2189 29.5003 88.9552 28.9363 89.5192 28.153C90.0832 27.3697 90.3652 26.273 90.3652 24.863V21.62H96.7102V35.25H90.3652V32.618C89.6445 33.652 88.6575 34.4823 87.4042 35.109C86.1509 35.7043 84.7879 36.002 83.3152 36.002ZM73.5862 18.659C73.5862 16.873 74.0405 15.181 74.9492 13.583C75.8892 11.985 77.2365 10.6847 78.9912 9.682C80.7772 8.67934 82.9235 8.178 85.4302 8.178C88.8769 8.178 91.5402 9.118 93.4202 10.998C95.3002 12.878 96.3812 15.4473 96.6632 18.706H90.3652C90.2712 17.296 89.8795 16.1523 89.1902 15.275C88.5009 14.3663 87.2475 13.912 85.4302 13.912C84.0515 13.912 82.9705 14.147 82.1872 14.617C81.4352 15.0557 80.9025 15.651 80.5892 16.403C80.3072 17.1237 80.1662 17.8757 80.1662 18.659H73.5862Z" fill="black"/>
+            <path d="M58.9593 35.25V2.35H65.2573V29.845H71.1323V35.25H58.9593ZM55.7163 14.335V8.93H70.3803V14.335H55.7163Z" fill="black"/>
+            <path d="M39.8035 36.002C38.0802 36.002 36.5448 35.6887 35.1975 35.062C33.8815 34.404 32.8318 33.464 32.0485 32.242C31.2652 31.02 30.8735 29.5317 30.8735 27.777C30.8735 25.7403 31.3592 24.1267 32.3305 22.936C33.3332 21.7453 34.6335 20.8523 36.2315 20.257C37.8295 19.6617 39.5528 19.27 41.4015 19.082C43.2815 18.8627 45.0988 18.7373 46.8535 18.706V24.064C43.5635 24.0013 41.1665 24.2677 39.6625 24.863C38.1898 25.427 37.4535 26.3357 37.4535 27.589C37.4535 28.5603 37.7982 29.2653 38.4875 29.704C39.2082 30.1113 40.0698 30.315 41.0725 30.315C42.0125 30.315 42.9212 30.1583 43.7985 29.845C44.7072 29.5003 45.4435 28.9363 46.0075 28.153C46.5715 27.3697 46.8535 26.273 46.8535 24.863V21.62H53.1985V35.25H46.8535V32.618C46.1328 33.652 45.1458 34.4823 43.8925 35.109C42.6392 35.7043 41.2762 36.002 39.8035 36.002ZM30.0745 18.659C30.0745 16.873 30.5288 15.181 31.4375 13.583C32.3775 11.985 33.7248 10.6847 35.4795 9.682C37.2655 8.67934 39.4118 8.178 41.9185 8.178C45.3652 8.178 48.0285 9.118 49.9085 10.998C51.7885 12.878 52.8695 15.4473 53.1515 18.706H46.8535C46.7595 17.296 46.3678 16.1523 45.6785 15.275C44.9892 14.3663 43.7358 13.912 41.9185 13.912C40.5398 13.912 39.4588 14.147 38.6755 14.617C37.9235 15.0557 37.3908 15.651 37.0775 16.403C36.7955 17.1237 36.6545 17.8757 36.6545 18.659H30.0745Z" fill="black"/>
+            <path d="M11.844 36.002C9.36867 36.002 7.238 35.4223 5.452 34.263C3.69733 33.0723 2.35 31.4273 1.41 29.328C0.47 27.2287 0 24.8317 0 22.137C0 19.411 0.47 16.9983 1.41 14.899C2.35 12.7997 3.69733 11.1547 5.452 9.964C7.238 8.77333 9.36867 8.178 11.844 8.178C13.6613 8.178 15.1967 8.52267 16.45 9.212C17.7347 9.87 18.7843 10.8413 19.599 12.126V32.101C18.8157 33.323 17.7973 34.2787 16.544 34.968C15.322 35.6573 13.7553 36.002 11.844 36.002ZM12.878 30.315C14.382 30.315 15.6353 29.9547 16.638 29.234C17.6407 28.5133 18.377 27.5263 18.847 26.273C19.3483 25.0197 19.599 23.641 19.599 22.137C19.599 20.6017 19.3483 19.2073 18.847 17.954C18.377 16.6693 17.6407 15.6667 16.638 14.946C15.6353 14.2253 14.382 13.865 12.878 13.865C11.4993 13.865 10.3243 14.2253 9.353 14.946C8.38167 15.6667 7.64533 16.6537 7.144 17.907C6.674 19.1603 6.439 20.5703 6.439 22.137C6.439 23.6723 6.674 25.0667 7.144 26.32C7.64533 27.542 8.38167 28.5133 9.353 29.234C10.3243 29.9547 11.4993 30.315 12.878 30.315ZM19.599 35.25V9.53674e-07H25.897V35.25H19.599Z" fill="black"/>
+          </svg>
+          <div class="absolute" style="left: 104px; top: 3px; width: 25px; height: 38px; display: flex; align-items: center; justify-content: center;">
+            <div class="bg-de-purple" style="width: 40px; height: 7px; transform: rotate(-61deg);"></div>
+          </div>
+          <svg class="absolute" style="left: 133px; top: 0;" width="234" height="47" viewBox="0 0 234.192 46.624" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M218.165 28.905C218.322 30.2523 218.902 31.208 219.904 31.772C220.938 32.3047 222.113 32.571 223.429 32.571C224.745 32.571 225.826 32.336 226.672 31.866C227.518 31.396 227.941 30.6283 227.941 29.563C227.941 28.905 227.644 28.4037 227.048 28.059C226.484 27.683 225.732 27.401 224.792 27.213C223.884 26.9937 222.865 26.79 221.737 26.602C220.641 26.414 219.513 26.1633 218.353 25.85C217.225 25.5367 216.191 25.098 215.251 24.534C214.343 23.97 213.606 23.218 213.042 22.278C212.478 21.3067 212.196 20.069 212.196 18.565C212.196 17.155 212.651 15.8077 213.559 14.523C214.468 13.207 215.737 12.1573 217.366 11.374C219.027 10.5593 220.923 10.152 223.053 10.152C224.965 10.152 226.735 10.5437 228.364 11.327C229.994 12.079 231.294 13.1287 232.265 14.476C233.268 15.8233 233.769 17.39 233.769 19.176H227.518C227.393 17.8287 226.892 16.8887 226.014 16.356C225.137 15.8233 224.087 15.557 222.865 15.557C221.424 15.557 220.327 15.839 219.575 16.403C218.823 16.967 218.447 17.6877 218.447 18.565C218.447 19.2857 218.729 19.8497 219.293 20.257C219.889 20.6643 220.641 20.9777 221.549 21.197C222.489 21.4163 223.523 21.62 224.651 21.808C225.779 21.9647 226.892 22.1997 227.988 22.513C229.116 22.795 230.15 23.218 231.09 23.782C232.03 24.3147 232.782 25.051 233.346 25.991C233.91 26.8997 234.192 28.0903 234.192 29.563C234.192 31.2237 233.738 32.6963 232.829 33.981C231.921 35.2343 230.636 36.2213 228.975 36.942C227.346 37.6313 225.419 37.976 223.194 37.976C221.126 37.976 219.246 37.5843 217.554 36.801C215.862 35.9863 214.499 34.9053 213.465 33.558C212.463 32.1793 211.93 30.6283 211.867 28.905H218.165Z" fill="black"/>
+            <path d="M189.808 26.179V21.009H204.472L202.31 22.325C202.435 21.291 202.31 20.2727 201.934 19.27C201.558 18.2673 200.931 17.4527 200.054 16.826C199.176 16.168 198.017 15.839 196.576 15.839C194.696 15.839 193.082 16.45 191.735 17.672C190.419 18.894 189.776 20.6957 189.808 23.077H183.181C183.337 20.2883 184.027 17.9383 185.249 16.027C186.502 14.1157 188.116 12.6587 190.09 11.656C192.064 10.6533 194.226 10.152 196.576 10.152C198.362 10.152 200.054 10.5123 201.652 11.233C203.25 11.9537 204.628 13.0033 205.788 14.382C206.947 15.7293 207.793 17.4057 208.326 19.411C208.858 21.385 208.952 23.641 208.608 26.179H189.808ZM196.576 37.976C194.132 37.976 191.954 37.4903 190.043 36.519C188.163 35.5163 186.643 34.1377 185.484 32.383C184.324 30.597 183.588 28.529 183.275 26.179H189.808C190.058 27.965 190.716 29.4377 191.782 30.597C192.878 31.725 194.476 32.289 196.576 32.289C198.017 32.289 199.192 31.96 200.101 31.302C201.009 30.644 201.636 29.8293 201.981 28.858H208.655C208.279 30.6753 207.542 32.2733 206.446 33.652C205.349 34.9993 203.955 36.0647 202.263 36.848C200.602 37.6 198.706 37.976 196.576 37.976Z" fill="black"/>
+            <path d="M173.242 10.904H179.54V37.224H173.242V10.904ZM171.456 1.551L178.224 0L179.775 6.862L173.007 8.413L171.456 1.551Z" fill="black"/>
+            <path d="M155.621 37.224V4.324H161.919V31.819H167.794V37.224H155.621ZM152.378 16.309V10.904H167.042V16.309H152.378Z" fill="black"/>
+            <path d="M142.306 10.904H148.604V37.224H142.306V10.904ZM140.52 1.551L147.288 0L148.839 6.862L142.071 8.413L140.52 1.551Z" fill="black"/>
+            <path d="M121.863 37.976C119.387 37.976 117.257 37.3963 115.471 36.237C113.716 35.0463 112.369 33.4013 111.429 31.302C110.489 29.2027 110.019 26.8057 110.019 24.111C110.019 21.385 110.489 18.9723 111.429 16.873C112.369 14.7737 113.716 13.1287 115.471 11.938C117.257 10.7473 119.387 10.152 121.863 10.152C123.68 10.152 125.215 10.4967 126.469 11.186C127.753 11.844 128.803 12.8153 129.618 14.1V34.075C128.834 35.297 127.816 36.2527 126.563 36.942C125.341 37.6313 123.774 37.976 121.863 37.976ZM122.897 32.289C124.401 32.289 125.654 31.9287 126.657 31.208C127.659 30.4873 128.396 29.5003 128.866 28.247C129.367 26.9937 129.618 25.615 129.618 24.111C129.618 22.5757 129.367 21.1813 128.866 19.928C128.396 18.6433 127.659 17.6407 126.657 16.92C125.654 16.1993 124.401 15.839 122.897 15.839C121.518 15.839 120.343 16.1993 119.372 16.92C118.4 17.6407 117.664 18.6277 117.163 19.881C116.693 21.1343 116.458 22.5443 116.458 24.111C116.458 25.6463 116.693 27.0407 117.163 28.294C117.664 29.516 118.4 30.4873 119.372 31.208C120.343 31.9287 121.518 32.289 122.897 32.289ZM129.618 37.224V1.974H135.916V37.224H129.618Z" fill="black"/>
+            <path d="M88.6016 26.179V21.009H103.266L101.104 22.325C101.229 21.291 101.104 20.2727 100.728 19.27C100.352 18.2673 99.725 17.4527 98.8476 16.826C97.9703 16.168 96.811 15.839 95.3696 15.839C93.4896 15.839 91.876 16.45 90.5286 17.672C89.2126 18.894 88.5703 20.6957 88.6016 23.077H81.9746C82.1313 20.2883 82.8206 17.9383 84.0426 16.027C85.296 14.1157 86.9096 12.6587 88.8836 11.656C90.8576 10.6533 93.0196 10.152 95.3696 10.152C97.1556 10.152 98.8476 10.5123 100.446 11.233C102.044 11.9537 103.422 13.0033 104.582 14.382C105.741 15.7293 106.587 17.4057 107.12 19.411C107.652 21.385 107.746 23.641 107.402 26.179H88.6016ZM95.3696 37.976C92.9256 37.976 90.748 37.4903 88.8366 36.519C86.9566 35.5163 85.437 34.1377 84.2776 32.383C83.1183 30.597 82.382 28.529 82.0686 26.179H88.6016C88.8523 27.965 89.5103 29.4377 90.5756 30.597C91.6723 31.725 93.2703 32.289 95.3696 32.289C96.811 32.289 97.986 31.96 98.8946 31.302C99.8033 30.644 100.43 29.8293 100.775 28.858H107.449C107.073 30.6753 106.336 32.2733 105.24 33.652C104.143 34.9993 102.749 36.0647 101.057 36.848C99.396 37.6 97.5003 37.976 95.3696 37.976Z" fill="black"/>
+            <path d="M67.6877 37.976C65.8077 37.976 64.2254 37.6313 62.9407 36.942C61.6874 36.2527 60.6847 35.297 59.9327 34.075V14.147C60.7474 12.8623 61.7814 11.8753 63.0347 11.186C64.3194 10.4967 65.8704 10.152 67.6877 10.152C70.1631 10.152 72.2781 10.7473 74.0327 11.938C75.7874 13.1287 77.1347 14.7737 78.0747 16.873C79.0461 18.9723 79.5317 21.385 79.5317 24.111C79.5317 26.8057 79.0461 29.2027 78.0747 31.302C77.1347 33.4013 75.7874 35.0463 74.0327 36.237C72.2781 37.3963 70.1631 37.976 67.6877 37.976ZM53.6347 46.624V10.904H59.9327V46.624H53.6347ZM66.6067 32.289C68.0481 32.289 69.2387 31.9287 70.1787 31.208C71.1187 30.4873 71.8394 29.516 72.3407 28.294C72.8421 27.0407 73.0927 25.6463 73.0927 24.111C73.0927 22.5443 72.8421 21.1343 72.3407 19.881C71.8394 18.6277 71.1187 17.6407 70.1787 16.92C69.2387 16.1993 68.0481 15.839 66.6067 15.839C65.1027 15.839 63.8494 16.1993 62.8467 16.92C61.8754 17.6407 61.1391 18.6433 60.6377 19.928C60.1677 21.1813 59.9327 22.5757 59.9327 24.111C59.9327 25.615 60.1677 26.9937 60.6377 28.247C61.1391 29.5003 61.8754 30.4873 62.8467 31.208C63.8494 31.9287 65.1027 32.289 66.6067 32.289Z" fill="black"/>
+            <path d="M26.2517 10.904H33.5837L50.3627 37.224H43.0307L26.2517 10.904ZM50.2217 10.904L33.4427 37.224H26.1107L42.8897 10.904H50.2217Z" fill="black"/>
+            <path d="M6.62702 26.179V21.009H21.291L19.129 22.325C19.2543 21.291 19.129 20.2727 18.753 19.27C18.377 18.2673 17.7503 17.4527 16.873 16.826C15.9957 16.168 14.8363 15.839 13.395 15.839C11.515 15.839 9.90135 16.45 8.55402 17.672C7.23802 18.894 6.59568 20.6957 6.62702 23.077H1.52588e-05C0.156682 20.2883 0.846015 17.9383 2.06802 16.027C3.32135 14.1157 4.93502 12.6587 6.90902 11.656C8.88302 10.6533 11.045 10.152 13.395 10.152C15.181 10.152 16.873 10.5123 18.471 11.233C20.069 11.9537 21.4477 13.0033 22.607 14.382C23.7663 15.7293 24.6124 17.4057 25.145 19.411C25.6777 21.385 25.7717 23.641 25.427 26.179H6.62702ZM13.395 37.976C10.951 37.976 8.77335 37.4903 6.86202 36.519C4.98202 35.5163 3.46235 34.1377 2.30302 32.383C1.14368 30.597 0.407349 28.529 0.0940152 26.179H6.62702C6.87768 27.965 7.53568 29.4377 8.60102 30.597C9.69768 31.725 11.2957 32.289 13.395 32.289C14.8363 32.289 16.0113 31.96 16.92 31.302C17.8287 30.644 18.4553 29.8293 18.8 28.858H25.474C25.098 30.6753 24.3617 32.2733 23.265 33.652C22.1683 34.9993 20.774 36.0647 19.082 36.848C17.4213 37.6 15.5257 37.976 13.395 37.976Z" fill="black"/>
+          </svg>
+        </a>
+      </div>
+      <div class="mt-[2px]">
+        <svg class="max-w-full h-auto" width="366" height="13" viewBox="0 0 365.962 12.1606" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M365.962 11.9365H364.534L363.24 7.83594H359.396L358.085 11.9365H356.674L360.5 0.224121H362.136L365.962 11.9365ZM362.849 6.64893L361.314 1.80127L359.786 6.64893H362.849Z" fill="black"/><path d="M356.415 1.32812H352.804V11.9365H351.451V1.32812H347.824V0.224121H356.415V1.32812Z" fill="black"/><path d="M347.582 11.9365H346.155L344.86 7.83594H341.016L339.705 11.9365H338.294L342.12 0.224121H343.756L347.582 11.9365ZM344.469 6.64893L342.934 1.80127L341.406 6.64893H344.469Z" fill="black"/><path d="M330.365 0.224121H332.673C334.206 0.224121 335.434 0.74707 336.359 1.79297C337.283 2.83333 337.745 4.26383 337.745 6.08447C337.745 7.94385 337.274 9.38542 336.334 10.4092C335.398 11.4274 334.198 11.9365 332.731 11.9365H330.365V0.224121ZM331.727 10.7495H332.69C333.802 10.7495 334.682 10.3372 335.329 9.5127C335.977 8.68815 336.301 7.54541 336.301 6.08447C336.301 4.6346 335.974 3.49463 335.321 2.66455C334.674 1.82894 333.796 1.41113 332.69 1.41113H331.727V10.7495Z" fill="black"/><path d="M317.846 1.51904C317.149 1.28109 316.487 1.16211 315.862 1.16211C315.154 1.16211 314.575 1.32536 314.127 1.65186C313.684 1.97282 313.463 2.43213 313.463 3.02979C313.463 3.73812 314.047 4.36068 315.215 4.89746C316.078 5.2959 316.648 5.57259 316.924 5.72754C317.207 5.88249 317.492 6.09554 317.779 6.3667C318.067 6.63786 318.297 6.95882 318.468 7.32959C318.646 7.69482 318.734 8.1071 318.734 8.56641C318.734 9.70638 318.349 10.5918 317.58 11.2227C316.817 11.848 315.915 12.1606 314.874 12.1606C313.867 12.1606 312.984 11.9614 312.226 11.563L312.508 10.3926C313.399 10.7965 314.177 10.9985 314.841 10.9985C315.616 10.9985 316.236 10.7993 316.7 10.4009C317.171 9.99691 317.406 9.44352 317.406 8.74072C317.406 8.22054 317.254 7.7806 316.949 7.4209C316.645 7.05566 316.083 6.6849 315.264 6.30859C314.423 5.92122 313.878 5.65837 313.629 5.52002C313.386 5.37614 313.142 5.17969 312.899 4.93066C312.655 4.68164 312.467 4.40218 312.334 4.09229C312.201 3.78239 312.135 3.44482 312.135 3.07959C312.135 2.11117 312.484 1.35579 313.181 0.813477C313.878 0.271159 314.761 0 315.829 0C316.609 0 317.384 0.118978 318.153 0.356934L317.846 1.51904Z" fill="black"/><path d="M307.569 5.51172C308.349 5.69434 308.96 6.0485 309.403 6.57422C309.846 7.09993 310.067 7.72526 310.067 8.4502C310.067 9.5127 309.68 10.3594 308.905 10.9902C308.136 11.6211 307.209 11.9365 306.124 11.9365H302.796V0.224121H306.041C307.17 0.224121 308.053 0.473145 308.689 0.971191C309.326 1.4637 309.644 2.16097 309.644 3.06299C309.644 3.61637 309.458 4.10889 309.088 4.54053C308.722 4.97217 308.216 5.28483 307.569 5.47852V5.51172ZM304.157 4.88086H305.751C307.416 4.88086 308.249 4.28597 308.249 3.09619C308.249 2.55387 308.044 2.13883 307.635 1.85107C307.225 1.55778 306.625 1.41113 305.834 1.41113H304.157V4.88086ZM304.157 10.7495H305.701C306.603 10.7495 307.317 10.5448 307.842 10.1353C308.374 9.72575 308.639 9.16406 308.639 8.4502C308.639 7.69206 308.379 7.10547 307.859 6.69043C307.339 6.27539 306.586 6.06787 305.601 6.06787H304.157V10.7495Z" fill="black"/><path d="M300.761 11.2061C299.842 11.8424 298.777 12.1606 297.565 12.1606C296.049 12.1606 294.895 11.6405 294.104 10.6001C293.318 9.55973 292.925 8.05452 292.925 6.08447C292.925 4.18083 293.307 2.69222 294.07 1.61865C294.834 0.539551 295.999 0 297.565 0C298.13 0 298.688 0.0719401 299.242 0.21582C299.795 0.359701 300.241 0.550618 300.578 0.788574L300.13 1.85938C299.35 1.41667 298.495 1.19531 297.565 1.19531C296.486 1.19531 295.684 1.58822 295.158 2.37402C294.632 3.1543 294.369 4.39111 294.369 6.08447C294.369 9.33838 295.435 10.9653 297.565 10.9653C298.467 10.9653 299.391 10.6886 300.338 10.1353L300.761 11.2061Z" fill="black"/><path d="M282.896 1.32812H279.285V11.9365H277.932V1.32812H274.304V0.224121H282.896V1.32812Z" fill="black"/><path d="M272.544 11.9365H266.426V0.224121H272.494V1.41113H267.787V5.03857H272.311V6.22559H267.787V10.7495H272.544V11.9365Z" fill="black"/><path d="M263.984 11.9365H262.673V1.89258L260.905 6.69873H259.618L257.85 1.89258V11.9365H256.539V0.224121H258.307L260.266 5.56152L262.216 0.224121H263.984V11.9365Z" fill="black"/><path d="M244.326 1.51904C243.629 1.28109 242.968 1.16211 242.342 1.16211C241.634 1.16211 241.056 1.32536 240.607 1.65186C240.165 1.97282 239.943 2.43213 239.943 3.02979C239.943 3.73812 240.527 4.36068 241.695 4.89746C242.558 5.2959 243.128 5.57259 243.405 5.72754C243.687 5.88249 243.972 6.09554 244.26 6.3667C244.548 6.63786 244.777 6.95882 244.949 7.32959C245.126 7.69482 245.214 8.1071 245.214 8.56641C245.214 9.70638 244.83 10.5918 244.061 11.2227C243.297 11.848 242.395 12.1606 241.355 12.1606C240.347 12.1606 239.465 11.9614 238.707 11.563L238.989 10.3926C239.88 10.7965 240.657 10.9985 241.321 10.9985C242.096 10.9985 242.716 10.7993 243.181 10.4009C243.651 9.99691 243.886 9.44352 243.886 8.74072C243.886 8.22054 243.734 7.7806 243.43 7.4209C243.125 7.05566 242.564 6.6849 241.745 6.30859C240.903 5.92122 240.358 5.65837 240.109 5.52002C239.866 5.37614 239.622 5.17969 239.379 4.93066C239.135 4.68164 238.947 4.40218 238.814 4.09229C238.682 3.78239 238.615 3.44482 238.615 3.07959C238.615 2.11117 238.964 1.35579 239.661 0.813477C240.358 0.271159 241.241 0 242.309 0C243.089 0 243.864 0.118978 244.633 0.356934L244.326 1.51904Z" fill="black"/><path d="M236.174 11.9365H234.663L230.463 2.68945V11.9365H229.102V0.224121H230.621L234.837 9.38818V0.224121H236.174V11.9365Z" fill="black"/><path d="M223.431 0C224.743 0 225.742 0.520182 226.428 1.56055C227.119 2.59538 227.465 4.10335 227.465 6.08447C227.465 8.05452 227.122 9.55973 226.436 10.6001C225.75 11.6405 224.748 12.1606 223.431 12.1606C222.125 12.1606 221.126 11.6432 220.435 10.6084C219.748 9.56803 219.405 8.06006 219.405 6.08447C219.405 4.10889 219.748 2.60091 220.435 1.56055C221.121 0.520182 222.12 0 223.431 0ZM223.431 10.9653C225.158 10.9653 226.021 9.33838 226.021 6.08447C226.021 2.82503 225.158 1.19531 223.431 1.19531C222.59 1.19531 221.948 1.61865 221.505 2.46533C221.068 3.30648 220.85 4.51286 220.85 6.08447C220.85 7.67269 221.068 8.8846 221.505 9.72021C221.943 10.5503 222.584 10.9653 223.431 10.9653Z" fill="black"/><path d="M217.628 11.9365H216.267V6.12598H212.257V11.9365H210.896V0.224121H212.257V4.93066H216.267V0.224121H217.628V11.9365Z" fill="black"/><path d="M209.376 1.32812H205.765V11.9365H204.412V1.32812H200.785V0.224121H209.376V1.32812Z" fill="black"/><path d="M200.543 11.9365H199.115L197.82 7.83594H193.977L192.665 11.9365H191.254L195.081 0.224121H196.716L200.543 11.9365ZM197.43 6.64893L195.894 1.80127L194.367 6.64893H197.43Z" fill="black"/><path d="M191.602 11.9365H189.884L185.924 6.19238L184.687 7.53711V11.9365H183.326V0.224121H184.687V5.83545L189.884 0.224121H191.453L186.879 5.17139L191.602 11.9365Z" fill="black"/><path d="M181.291 11.2061C180.373 11.8424 179.307 12.1606 178.096 12.1606C176.579 12.1606 175.425 11.6405 174.634 10.6001C173.848 9.55973 173.455 8.05452 173.455 6.08447C173.455 4.18083 173.837 2.69222 174.601 1.61865C175.365 0.539551 176.53 0 178.096 0C178.66 0 179.219 0.0719401 179.772 0.21582C180.326 0.359701 180.771 0.550618 181.109 0.788574L180.661 1.85938C179.88 1.41667 179.025 1.19531 178.096 1.19531C177.016 1.19531 176.214 1.58822 175.688 2.37402C175.163 3.1543 174.9 4.39111 174.9 6.08447C174.9 9.33838 175.965 10.9653 178.096 10.9653C178.998 10.9653 179.922 10.6886 180.868 10.1353L181.291 11.2061Z" fill="black"/><path d="M172.973 11.9365H171.545L170.25 7.83594H166.407L165.096 11.9365H163.684L167.511 0.224121H169.146L172.973 11.9365ZM169.86 6.64893L168.325 1.80127L166.797 6.64893H169.86Z" fill="black"/><path d="M162.488 11.9365H161.127V6.12598H157.118V11.9365H155.756V0.224121H157.118V4.93066H161.127V0.224121H162.488V11.9365Z" fill="black"/><path d="M143.884 11.9365H137.766V0.224121H143.834V1.41113H139.128V5.03857H143.652V6.22559H139.128V10.7495H143.884V11.9365Z" fill="black"/><path d="M136.462 11.9365H134.744L130.784 6.19238L129.548 7.53711V11.9365H128.186V0.224121H129.548V5.83545L134.744 0.224121H136.313L131.739 5.17139L136.462 11.9365Z" fill="black"/><path d="M125.504 11.9365H119.386V0.224121H125.454V1.41113H120.748V5.03857H125.272V6.22559H120.748V10.7495H125.504V11.9365Z" fill="black"/><path d="M115.775 11.9365H110.454V10.7495H112.471V1.41113H110.454V0.224121H115.775V1.41113H113.832V10.7495H115.775V11.9365Z" fill="black"/><path d="M108.286 1.32812H104.676V11.9365H103.322V1.32812H99.695V0.224121H108.286V1.32812Z" fill="black"/><path d="M97.2868 1.51904C96.5896 1.28109 95.9283 1.16211 95.3029 1.16211C94.5946 1.16211 94.0163 1.32536 93.5681 1.65186C93.1254 1.97282 92.904 2.43213 92.904 3.02979C92.904 3.73812 93.4878 4.36068 94.6555 4.89746C95.5188 5.2959 96.0887 5.57259 96.3654 5.72754C96.6477 5.88249 96.9327 6.09554 97.2204 6.3667C97.5082 6.63786 97.7378 6.95882 97.9094 7.32959C98.0865 7.69482 98.175 8.1071 98.175 8.56641C98.175 9.70638 97.7904 10.5918 97.0212 11.2227C96.2575 11.848 95.3555 12.1606 94.3151 12.1606C93.308 12.1606 92.4253 11.9614 91.6672 11.563L91.9494 10.3926C92.8404 10.7965 93.6179 10.9985 94.2819 10.9985C95.0567 10.9985 95.6765 10.7993 96.1413 10.4009C96.6117 9.99691 96.8469 9.44352 96.8469 8.74072C96.8469 8.22054 96.6947 7.7806 96.3903 7.4209C96.086 7.05566 95.5243 6.6849 94.7053 6.30859C93.8641 5.92122 93.319 5.65837 93.07 5.52002C92.8265 5.37614 92.583 5.17969 92.3396 4.93066C92.0961 4.68164 91.9079 4.40218 91.7751 4.09229C91.6423 3.78239 91.5759 3.44482 91.5759 3.07959C91.5759 2.11117 91.9245 1.35579 92.6218 0.813477C93.319 0.271159 94.2017 0 95.2697 0C96.05 0 96.8247 0.118978 97.5939 0.356934L97.2868 1.51904Z" fill="black"/><path d="M88.2048 11.9365H82.884V10.7495H84.9011V1.41113H82.884V0.224121H88.2048V1.41113H86.2624V10.7495H88.2048V11.9365Z" fill="black"/><path d="M79.8117 11.9365H73.4367V0.224121H74.798V10.7495H79.8117V11.9365Z" fill="black"/><path d="M71.8834 11.9365H70.4557L69.1608 7.83594H65.3175L64.006 11.9365H62.5949L66.4215 0.224121H68.0568L71.8834 11.9365ZM68.7706 6.64893L67.235 1.80127L65.7077 6.64893H68.7706Z" fill="black"/><path d="M61.5646 11.9365H60.0538L55.8536 2.68945V11.9365H54.4923V0.224121H56.0113L60.2281 9.38818V0.224121H61.5646V11.9365Z" fill="black"/><path d="M53.4869 11.9365H51.7853L48.3487 6.61572H46.838V11.9365H45.4767V0.224121H48.7887C49.901 0.224121 50.7781 0.49528 51.42 1.0376C52.0675 1.57438 52.3912 2.32422 52.3912 3.28711C52.3912 4.00098 52.156 4.63737 51.6856 5.19629C51.2153 5.74967 50.5678 6.12598 49.7433 6.3252L53.4869 11.9365ZM46.838 5.42871H48.5563C49.2757 5.42871 49.8595 5.23503 50.3077 4.84766C50.756 4.45475 50.9801 3.96224 50.9801 3.37012C50.9801 2.06413 50.1832 1.41113 48.5895 1.41113H46.838V5.42871Z" fill="black"/><path d="M43.0186 8.25098C43.0186 9.60677 42.7419 10.5973 42.1886 11.2227C41.6407 11.848 40.8051 12.1606 39.6817 12.1606C37.4184 12.1606 36.2867 10.8685 36.2867 8.28418V0.224121H37.648V8.15967C37.648 10.0301 38.3259 10.9653 39.6817 10.9653C40.3624 10.9653 40.8604 10.744 41.1759 10.3013C41.4968 9.85856 41.6573 9.13916 41.6573 8.14307V0.224121H43.0186V8.25098Z" fill="black"/><path d="M30.442 0C31.7535 0 32.7523 0.520182 33.4385 1.56055C34.1303 2.59538 34.4761 4.10335 34.4761 6.08447C34.4761 8.05452 34.133 9.55973 33.4468 10.6001C32.7606 11.6405 31.759 12.1606 30.442 12.1606C29.136 12.1606 28.1371 11.6432 27.4454 10.6084C26.7592 9.56803 26.4161 8.06006 26.4161 6.08447C26.4161 4.10889 26.7592 2.60091 27.4454 1.56055C28.1316 0.520182 29.1304 0 30.442 0ZM30.442 10.9653C32.1685 10.9653 33.0318 9.33838 33.0318 6.08447C33.0318 2.82503 32.1685 1.19531 30.442 1.19531C29.6008 1.19531 28.9589 1.61865 28.5162 2.46533C28.079 3.30648 27.8604 4.51286 27.8604 6.08447C27.8604 7.67269 28.079 8.8846 28.5162 9.72021C28.9533 10.5503 29.5953 10.9653 30.442 10.9653Z" fill="black"/><path d="M23.3604 8.82373C23.3604 9.8973 23.0782 10.7218 22.5137 11.2974C21.9548 11.8729 21.133 12.1606 20.0484 12.1606C19.1021 12.1606 18.2416 11.9614 17.4668 11.563L17.8736 10.4756C18.5321 10.8021 19.257 10.9653 20.0484 10.9653C20.7346 10.9653 21.2299 10.7855 21.5342 10.4258C21.8441 10.0605 21.9991 9.49333 21.9991 8.72412V0.224121H23.3604V8.82373Z" fill="black"/><path d="M6.20898 6.4248L0 10.1519V8.93164L4.98047 5.96826L0 2.93018V1.73486L6.20898 5.42871V6.4248Z" fill="black"/>
+        </svg>
+      </div>
+      <!-- NAV — desktop horizontal menu -->
+      <nav class="hidden md:flex absolute top-0 bottom-0 right-6 lg:right-[40px] z-30 items-center gap-[40px] lg:gap-[59px]">
+        <a href="index.html" class="font-mono text-[15px] text-black hover:text-de-purple transition-colors">AGENDA</a>
+        <a href="workshop.html" class="font-mono text-[15px] text-black hover:text-de-purple transition-colors">WORKSHOP</a>
+        <div class="relative hackathons-trigger">
+          <button class="font-mono text-[15px] text-de-purple transition-colors cursor-pointer bg-transparent border-0 p-0">HACKATHONS</button>
+          <div class="hackathons-dropdown">
+            <a href="hackathon-wonen.html" class="block px-5 py-3 font-mono text-[14px] text-black hover:text-de-purple transition-colors whitespace-nowrap">Hackathon #1 &mdash; Wonen</a>
+            <a href="hackathon-energie.html" class="block px-5 py-3 font-mono text-[14px] text-de-purple transition-colors whitespace-nowrap">Hackathon #2 &mdash; Energie</a>
+          </div>
+        </div>
+        <a href="overons.html" class="font-mono text-[15px] text-black hover:text-de-purple transition-colors">INFO</a>
+        <a href="aanmeldformulier.html" class="bg-black text-white font-medium text-base px-4 py-[9px] hover:bg-de-purple transition-colors inline-flex items-center justify-center" style="width: 116px; height: 39px;">Aanmelden</a>
+      </nav>
+      <!-- NAV — mobile hamburger -->
+      <div class="md:hidden absolute top-0 bottom-0 right-6 z-30 flex items-center">
+        <button id="mobile-menu-btn" class="font-mono text-[15px] font-medium text-black hover:text-de-purple transition-colors cursor-pointer bg-transparent border-0 p-2">MENU</button>
+        <div id="mobile-menu-panel" class="mobile-menu-panel fixed inset-0 z-50 bg-de-bg">
+          <div class="flex justify-end p-6">
+            <button id="mobile-menu-close" class="font-mono text-[15px] font-medium text-black hover:text-de-purple transition-colors cursor-pointer bg-transparent border-0 p-2">SLUIT</button>
+          </div>
+          <div class="flex flex-col px-8 pt-4 gap-0">
+            <a href="index.html" class="font-mono text-[18px] text-black hover:text-de-purple transition-colors py-4 border-b border-black/10">AGENDA</a>
+            <a href="workshop.html" class="font-mono text-[18px] text-black hover:text-de-purple transition-colors py-4 border-b border-black/10">WORKSHOP</a>
+            <div class="border-b border-black/10">
+              <button id="mobile-hackathons-toggle" class="font-mono text-[18px] text-de-purple transition-colors py-4 w-full text-left bg-transparent border-0 cursor-pointer flex items-center justify-between">HACKATHONS <span class="text-[14px] ml-2">&#9662;</span></button>
+              <div id="mobile-hackathons-sub" class="pb-3 pl-4">
+                <a href="hackathon-wonen.html" class="block font-mono text-[16px] text-black hover:text-de-purple transition-colors py-2">Hackathon #1 &mdash; Wonen</a>
+                <a href="hackathon-energie.html" class="block font-mono text-[16px] text-de-purple transition-colors py-2">Hackathon #2 &mdash; Energie</a>
+              </div>
+            </div>
+            <a href="overons.html" class="font-mono text-[18px] text-black hover:text-de-purple transition-colors py-4 border-b border-black/10">INFO</a>
+            <div class="mt-6">
+              <a href="aanmeldformulier.html" class="bg-black text-white font-medium text-base px-4 py-[9px] hover:bg-de-purple transition-colors inline-flex items-center justify-center" style="width: 116px; height: 39px;">Aanmelden</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ====== HORIZONTAL LINE UNDER HEADER + T-CONNECTOR ====== -->
+    <div class="relative ml-0 md:ml-[60px] lg:ml-[111px]">
+      <div class="h-px w-full" style="background: #cecece;"></div>
+      <div class="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 z-20 w-[21px] h-[40px]">
+        <div class="absolute left-0 top-0 connect-t-vertical"></div>
+        <div class="absolute left-0 top-1/2 -translate-y-1/2 connect-t-horizontal"></div>
+      </div>
+    </div>
+
+    <!-- ====== EVENT INFO BAR ====== -->
+    <div class="ml-0 md:ml-[60px] lg:ml-[111px]">
+      <div class="bg-de-purple text-white px-6 lg:px-[30px] py-5 lg:py-0 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-0" style="min-height: 80px;">
+        <div class="shrink-0">
+          <p class="font-semibold text-base leading-snug">HACKATHON #2</p>
+          <p class="text-base leading-snug">Thema: Energie</p>
+        </div>
+        <div class="hidden lg:block flex-1"></div>
+        <div class="lg:text-right">
+          <p class="font-semibold text-base leading-snug">Februari 2027</p>
+          <p class="text-base leading-snug">CBS Hoofdkantoor Den Haag</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== PAGE CONTENT: two-column layout ====== -->
+    <div class="pl-6 md:pl-[100px] lg:pl-[161px] pr-6 lg:pr-[40px]">
+      <div class="flex flex-col lg:flex-row gap-10 lg:gap-14 pt-10 pb-10">
+
+        <!-- LEFT COLUMN: main content -->
+        <div class="flex-1 min-w-0" style="max-width: 620px;">
+
+          <section class="pb-8">
+            <h1 class="font-mono font-medium text-de-purple text-[25px] leading-[31px] mb-2">Hackathon #2: De rekening van de energietransitie</h1>
+            <h2 class="font-semibold text-[20px] leading-[28px] mb-6">Wie betaalt</h2>
+            <p class="text-base leading-[31px] mb-6">De energietransitie is volgens het CBS &eacute;&eacute;n van de grootste uitdagingen van de huidige generatie. Ambitieuze doelen, grootschalige investeringen, fundamentele veranderingen in hoe we energie opwekken en gebruiken.</p>
+            <p class="text-base leading-[31px] mb-6">Maar wie draagt de lasten? Welke wijken profiteren van isolatiesubsidies en welke niet? Hoe verhouden energieprijzen zich tot inkomensniveaus per regio? Waar ontstaan nieuwe vormen van energie-armoede? En welke gemeenten slagen erin de transitie sociaal rechtvaardig te maken?</p>
+            <p class="text-base leading-[31px] mb-6">Het CBS publiceert data over energieverbruik, woningisolatie, subsidies en kosten op lokaal niveau. Die data kan laten zien waar de rekening van de transitie terecht komt.</p>
+            <p class="text-base leading-[31px] font-semibold">Deze hackathon maakt die verdelingseffecten zichtbaar.</p>
+          </section>
+
+          <section class="pb-8">
+            <h2 class="font-mono font-medium text-de-purple text-[25px] leading-[31px] mb-4">Datum en locatie</h2>
+            <p class="text-base leading-[31px] mb-6"><strong class="font-semibold">Februari 2027 (exacte datum volgt)</strong><br>CBS, Henri Faasdreef 312, Den Haag</p>
+
+            <h3 class="font-semibold text-[18px] leading-[28px] mb-4">Programma</h3>
+            <p class="text-base leading-[31px] mb-5">De dag draait om &eacute;&eacute;n doel: naar huis gaan met een concreet onderzoeksconcept dat uitgewerkt kan worden tot publicatie.</p>
+
+            <div class="space-y-2 mb-6">
+              <p class="text-base leading-[31px]"><strong class="font-semibold">09:00</strong> &mdash; Ontvangst en introductie</p>
+              <p class="text-base leading-[31px]"><strong class="font-semibold">09:30</strong> &mdash; CBS-experts: welke data is beschikbaar en wat zit erin</p>
+              <p class="text-base leading-[31px]"><strong class="font-semibold">10:00</strong> &mdash; Teamindeling en scherpen van onderzoeksvragen</p>
+              <p class="text-base leading-[31px]"><strong class="font-semibold">10:30</strong> &mdash; Bouwen: data-exploratie, eerste analyses, prototypes</p>
+              <p class="text-base leading-[31px]"><strong class="font-semibold">13:00</strong> &mdash; Lunch</p>
+              <p class="text-base leading-[31px]"><strong class="font-semibold">14:00</strong> &mdash; Doorwerken: van inzicht naar verhaal</p>
+              <p class="text-base leading-[31px]"><strong class="font-semibold">16:00</strong> &mdash; Pitches: elk team presenteert hun onderzoeksconcept (5 min)</p>
+              <p class="text-base leading-[31px]"><strong class="font-semibold">17:00</strong> &mdash; Selectie: welke concepten krijgen begeleiding naar publicatie</p>
+              <p class="text-base leading-[31px]"><strong class="font-semibold">17:30</strong> &mdash; Afsluiting</p>
+            </div>
+
+            <p class="font-semibold text-base leading-[31px] mb-2">Je vertrekt met:</p>
+            <ul class="list-disc pl-5 text-base leading-[31px] mb-6">
+              <li>Een scherpe onderzoeksvraag</li>
+              <li>Een eerste data-analyse of werkend prototype</li>
+              <li>Een concreet plan voor een journalistieke publicatie</li>
+              <li>Feedback van CBS-experts en collega-journalisten</li>
+            </ul>
+            <p class="text-base leading-[31px]">De meest veelbelovende concepten krijgen inhoudelijke begeleiding van Momus en technische ondersteuning van Open State Foundation om het onderzoek uit te voeren en te publiceren.</p>
+          </section>
+
+          <section class="pb-8">
+            <h2 class="font-mono font-medium text-de-purple text-[25px] leading-[31px] mb-4">Voor wie</h2>
+            <p class="text-base leading-[31px] mb-6">Deze hackathon is bedoeld voor journalisten en data-analisten/developers die zich willen verdiepen in het thema energietransitie. CBS-experts zijn de dag aanwezig om vragen te beantwoorden en mee te denken.</p>
+            <p class="text-base leading-[31px]">Voorafgaand aan de hackathon organiseren we een workshop Machine-Assisted Investigation. Details volgen.</p>
+          </section>
+
+          <section class="pb-6">
+            <h2 class="font-mono font-medium text-de-purple text-[25px] leading-[31px] mb-4">Aanmelden</h2>
+            <p class="text-base leading-[31px] mb-6">Aanmelding opent in november 2026.</p>
+          </section>
+
+        </div>
+
+        <!-- RIGHT COLUMN: datasets sidebar -->
+        <div class="lg:w-[340px] xl:w-[380px] shrink-0">
+          <div class="bg-de-purple-light p-6 lg:p-8 lg:sticky lg:top-6">
+            <h2 class="font-semibold text-base text-black mb-6">DATASETS + BRONNEN</h2>
+            <div class="flex flex-col gap-8 mb-10">
+              <a href="#" class="text-base leading-[22px] text-de-purple underline">Energieverbruik huishoudens &mdash; Gedetailleerde data over gas- en elektriciteitsverbruik per regio</a>
+              <a href="#" class="text-base leading-[22px] text-de-purple underline">Energielabels en isolatiegraad &mdash; Dataset met isolatiekwaliteit van woningen gekoppeld aan locatie en eigendomstype</a>
+              <a href="#" class="text-base leading-[22px] text-de-purple underline">Duurzame energie in Nederland &mdash; Data over opwek van zonne- en windenergie per gemeente</a>
+            </div>
+
+            <h2 class="font-semibold text-base text-black mb-6">INSPIREREND ONDERZOEK</h2>
+            <div class="flex flex-col gap-8">
+              <a href="#" class="text-base leading-[22px] text-de-purple underline">&ldquo;De warmtepomp-kloof&rdquo; &mdash; Onderzoek dat aantoonde welke wijken wel en niet profiteren van subsidies</a>
+              <a href="#" class="text-base leading-[22px] text-de-purple underline">&ldquo;Energiearmoede in beeld&rdquo; &mdash; Cross-analyse van energiekosten, isolatiegraad en inkomen</a>
+              <a href="#" class="text-base leading-[22px] text-de-purple underline">&ldquo;De transitiewinnaars&rdquo; &mdash; Data-gedreven verhaal over gemeenten die de energietransitie sociaal rechtvaardig uitvoeren</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ====== HORIZONTAL LINE after content ====== -->
+    <div class="ml-0 md:ml-[60px] lg:ml-[111px] h-px" style="background: #cecece;"></div>
+
+    <!-- Bottom T-connector -->
+    <div class="hidden md:block relative ml-0 md:ml-[60px] lg:ml-[111px] h-[40px]">
+      <div class="absolute left-0 top-0 connect-t-vertical"></div>
+      <div class="absolute left-0 top-1/2 -translate-y-1/2 connect-t-horizontal"></div>
+    </div>
+
+    <div class="h-[80px]"></div>
+
+  </div>
+
+  <!-- Menu scripts -->
+  <script>
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      document.getElementById('mobile-menu-panel').classList.add('open');
+    });
+    document.getElementById('mobile-menu-close').addEventListener('click', function() {
+      document.getElementById('mobile-menu-panel').classList.remove('open');
+    });
+    document.getElementById('mobile-hackathons-toggle').addEventListener('click', function() {
+      document.getElementById('mobile-hackathons-sub').classList.toggle('hidden');
+    });
+    document.querySelectorAll('.hackathons-trigger > button').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        this.closest('.hackathons-trigger').classList.toggle('sub-open');
+      });
+    });
+    document.addEventListener('click', function(e) {
+      document.querySelectorAll('.hackathons-trigger').forEach(function(trigger) {
+        if (!trigger.contains(e.target)) trigger.classList.remove('sub-open');
+      });
+    });
+  </script>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="bg-black text-white">
+    <div class="max-w-[1728px] mx-auto px-6 md:px-20 lg:px-[161px] py-12">
+      <div class="flex flex-col md:flex-row gap-10 md:gap-20">
+        <div class="flex-1">
+          <p class="font-mono text-de-purple text-[14px] font-medium mb-3">data/expedities</p>
+          <p class="text-[14px] leading-[22px] text-gray-400">Journalistieke hackathons met CBS data. Een initiatief van Stichting Momus, Open State Foundation en het CBS.</p>
+        </div>
+        <div>
+          <p class="font-semibold text-[14px] mb-3">Navigatie</p>
+          <nav class="flex flex-col gap-2 text-[14px] text-gray-400">
+            <a href="index.html" class="hover:text-white transition-colors">Agenda</a>
+            <a href="workshop.html" class="hover:text-white transition-colors">Workshop</a>
+            <a href="hackathon-wonen.html" class="hover:text-white transition-colors">Hackathon #1 — Wonen</a>
+            <a href="hackathon-energie.html" class="hover:text-white transition-colors">Hackathon #2 — Energie</a>
+            <a href="overons.html" class="hover:text-white transition-colors">Info</a>
+            <a href="aanmeldformulier.html" class="hover:text-white transition-colors">Aanmelden</a>
+          </nav>
+        </div>
+      </div>
+      <div class="mt-10 pt-6 border-t border-gray-800">
+        <div class="flex flex-row flex-wrap items-center gap-6 md:gap-10 mb-6">
+          <a href="https://momusmedia.nl" target="_blank" rel="noopener noreferrer">
+            <img src="assets/momus-small.svg" alt="Momus" class="md:hidden h-[32px] w-auto brightness-0 invert">
+            <img src="assets/momus-logo.svg" alt="Momus" class="hidden md:block h-[40px] w-auto brightness-0 invert">
+          </a>
+          <a href="https://cbs.nl" target="_blank" rel="noopener noreferrer">
+            <img src="assets/cbs-small.svg" alt="Centraal Bureau voor de Statistiek" class="md:hidden h-[32px] w-auto brightness-0 invert">
+            <img src="assets/cbs-logo.svg" alt="Centraal Bureau voor de Statistiek" class="hidden md:block h-[34px] w-auto brightness-0 invert">
+          </a>
+          <a href="https://openstate.eu" target="_blank" rel="noopener noreferrer">
+            <img src="assets/openstate-small.svg" alt="Open State Foundation" class="md:hidden h-[32px] w-auto brightness-0 invert">
+            <img src="assets/openstate-logo.svg" alt="Open State Foundation" class="hidden md:block h-[36px] w-auto brightness-0 invert">
+          </a>
+        </div>
+        <p class="text-[12px] text-gray-500">&copy; 2026 data/expedities &mdash; Stichting Momus, Open State Foundation, CBS</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== MATRIX PATTERN ANIMATION ====== -->
+  <script>
+    (function() {
+      var container = document.getElementById('matrix-pattern');
+      if (!container) return;
+      var svg = container.querySelector('svg');
+      if (!svg) return;
+
+      var NS = 'http://www.w3.org/2000/svg';
+      var H = 713;
+      var W = 83;
+
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+      var defs = document.createElementNS(NS, 'defs');
+      var grad = document.createElementNS(NS, 'linearGradient');
+      grad.setAttribute('id', 'matrix-fade');
+      grad.setAttribute('x1', '0'); grad.setAttribute('y1', '0');
+      grad.setAttribute('x2', '0'); grad.setAttribute('y2', '1');
+      [[0, 0], [0.04, 1], [0.5, 1], [1, 0]].forEach(function(s) {
+        var stop = document.createElementNS(NS, 'stop');
+        stop.setAttribute('offset', s[0]);
+        stop.setAttribute('stop-color', 'white');
+        stop.setAttribute('stop-opacity', s[1]);
+        grad.appendChild(stop);
+      });
+      defs.appendChild(grad);
+      var mask = document.createElementNS(NS, 'mask');
+      mask.setAttribute('id', 'matrix-mask');
+      var maskRect = document.createElementNS(NS, 'rect');
+      maskRect.setAttribute('width', W);
+      maskRect.setAttribute('height', H);
+      maskRect.setAttribute('fill', 'url(#matrix-fade)');
+      mask.appendChild(maskRect);
+      defs.appendChild(mask);
+      svg.appendChild(defs);
+
+      var g = document.createElementNS(NS, 'g');
+      g.setAttribute('mask', 'url(#matrix-mask)');
+      svg.appendChild(g);
+
+      var cols = [
+        [0,2],[10,2],[20,2],[31,2],[42,2],[53,2],[64,2],[75,2]
+      ];
+      var COUNT = 90;
+      function rand(min, max) { return min + Math.random() * (max - min); }
+
+      for (var i = 0; i < COUNT; i++) {
+        var c = cols[Math.floor(Math.random() * cols.length)];
+        var h = rand(6, 22);
+        var dur = rand(38, 138);
+        var begin = -rand(0, dur);
+        var opacity = rand(0.45, 0.75);
+        var isPurple = Math.random() < 0.03;
+
+        var rect = document.createElementNS(NS, 'rect');
+        rect.setAttribute('x', c[0]);
+        rect.setAttribute('width', c[1]);
+        rect.setAttribute('height', h);
+        rect.setAttribute('fill', isPurple ? '#5D00FF' : '#515151');
+        rect.setAttribute('fill-opacity', isPurple ? rand(0.75, 0.95).toFixed(2) : opacity.toFixed(2));
+
+        var anim = document.createElementNS(NS, 'animateTransform');
+        anim.setAttribute('attributeName', 'transform');
+        anim.setAttribute('type', 'translate');
+        anim.setAttribute('values', '0 ' + (-h) + '; 0 ' + (H + h));
+        anim.setAttribute('dur', dur + 's');
+        anim.setAttribute('begin', begin.toFixed(2) + 's');
+        anim.setAttribute('repeatCount', 'indefinite');
+
+        rect.appendChild(anim);
+        g.appendChild(rect);
+      }
+    })();
+  </script>
+</body>
+</html>
