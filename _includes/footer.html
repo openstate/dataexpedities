@@ -1,0 +1,35 @@
+<footer class="bg-black text-white">
+  <div class="max-w-[1728px] mx-auto px-6 md:px-20 lg:px-[161px] py-12">
+    <div class="flex flex-col md:flex-row gap-10 md:gap-20">
+      <div class="flex-1">
+        <p class="font-mono text-de-purple text-[14px] font-medium mb-3">data/expedities</p>
+        <p class="text-[14px] leading-[22px] text-gray-400">Journalistieke hackathons met CBS data. Een initiatief van Stichting Momus, Open State Foundation en het CBS.</p>
+      </div>
+      <div>
+        <p class="font-semibold text-[14px] mb-3">Navigatie</p>
+        <nav class="flex flex-col gap-2 text-[14px] text-gray-400">
+          {% for item in site.data.navigation.footer %}
+          <a href="{{ item.url | relative_url }}" class="hover:text-white transition-colors">{{ item.label }}</a>
+          {% endfor %}
+        </nav>
+      </div>
+    </div>
+    <div class="mt-10 pt-6 border-t border-gray-800">
+      <div class="flex flex-row flex-wrap items-center gap-6 md:gap-10 mb-6">
+        <a href="https://momusmedia.nl" target="_blank" rel="noopener noreferrer">
+          <img src="{{ '/assets/momus-small.svg' | relative_url }}" alt="Momus" class="md:hidden h-[32px] w-auto brightness-0 invert">
+          <img src="{{ '/assets/momus-logo.svg' | relative_url }}" alt="Momus" class="hidden md:block h-[40px] w-auto brightness-0 invert">
+        </a>
+        <a href="https://cbs.nl" target="_blank" rel="noopener noreferrer">
+          <img src="{{ '/assets/cbs-small.svg' | relative_url }}" alt="Centraal Bureau voor de Statistiek" class="md:hidden h-[32px] w-auto brightness-0 invert">
+          <img src="{{ '/assets/cbs-logo.svg' | relative_url }}" alt="Centraal Bureau voor de Statistiek" class="hidden md:block h-[34px] w-auto brightness-0 invert">
+        </a>
+        <a href="https://openstate.eu" target="_blank" rel="noopener noreferrer">
+          <img src="{{ '/assets/openstate-small.svg' | relative_url }}" alt="Open State Foundation" class="md:hidden h-[32px] w-auto brightness-0 invert">
+          <img src="{{ '/assets/openstate-logo.svg' | relative_url }}" alt="Open State Foundation" class="hidden md:block h-[36px] w-auto brightness-0 invert">
+        </a>
+      </div>
+      <p class="text-[12px] text-gray-500">&copy; 2026 data/expedities &mdash; Stichting Momus, Open State Foundation, CBS</p>
+    </div>
+  </div>
+</footer>

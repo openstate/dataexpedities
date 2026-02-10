@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  {% include head.html %}
+</head>
+<body class="bg-de-bg font-sans text-black antialiased">
+  <div class="max-w-[1728px] mx-auto relative min-h-screen">
+
+    {% include matrix-pattern.html %}
+
+    <!-- Left vertical line -->
+    <div class="hidden md:block absolute md:left-[60px] lg:left-[111px] top-0 bottom-0 w-px z-10" style="background: #cecece;"></div>
+
+    {% include header.html %}
+
+    {% include line-separator.html %}
+
+    {{ content }}
+
+    {% include line-separator.html %}
+
+    <div class="h-[80px]"></div>
+
+  </div>
+
+  {% include menu-scripts.html %}
+
+  {% include footer.html %}
+
+  {% include matrix-animation.html %}
+</body>
+</html>

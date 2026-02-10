@@ -1,0 +1,43 @@
+---
+layout: default
+---
+{% assign event = site.data.events[page.event_key] %}
+
+{% include event-bar.html event=event %}
+
+<div class="pl-6 md:pl-[100px] lg:pl-[161px] pr-6 lg:pr-[40px]">
+  <div class="flex flex-col lg:flex-row gap-10 lg:gap-14 pt-10 pb-10">
+
+    <!-- LEFT COLUMN: main content -->
+    <div class="flex-1 min-w-0" style="max-width: 620px;">
+      {{ content }}
+    </div>
+
+    <!-- RIGHT COLUMN: datasets sidebar -->
+    {% if event.sidebar %}
+    <div class="lg:w-[340px] xl:w-[380px] shrink-0">
+      <div class="bg-de-purple-light p-6 lg:p-8 lg:sticky lg:top-6">
+        {% if event.sidebar.datasets.size > 0 %}
+        <h2 class="font-semibold text-base text-black mb-6">DATASETS + BRONNEN</h2>
+        <div class="flex flex-col gap-8 mb-10">
+          {% for ds in event.sidebar.datasets %}
+          <a href="{{ ds.url }}" class="text-base leading-[22px] text-de-purple underline">{{ ds.title }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if event.sidebar.research.size > 0 %}
+        <h2 class="font-semibold text-base text-black mb-6">INSPIREREND ONDERZOEK</h2>
+        <div class="flex flex-col gap-8">
+          {% for r in event.sidebar.research %}
+          <a href="{{ r.url }}" class="text-base leading-[22px] text-de-purple underline">{{ r.title }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+

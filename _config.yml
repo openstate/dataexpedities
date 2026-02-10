@@ -1,0 +1,20 @@
+title: "data/expedities"
+description: "Journalistieke hackathons met CBS data"
+url: ""
+baseurl: ""
+
+permalink: pretty
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - api
+  - Dockerfile
+  - docker-compose.yml
+  - .env
+  - .env.example
+  - vendor
+
+keep_files:
+  - assets

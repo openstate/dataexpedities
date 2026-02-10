@@ -1,0 +1,27 @@
+<script>
+  // Mobile menu open/close
+  document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+    document.getElementById('mobile-menu-panel').classList.add('open');
+  });
+  document.getElementById('mobile-menu-close').addEventListener('click', function() {
+    document.getElementById('mobile-menu-panel').classList.remove('open');
+  });
+  // Mobile hackathons sub-toggle
+  document.getElementById('mobile-hackathons-toggle').addEventListener('click', function() {
+    document.getElementById('mobile-hackathons-sub').classList.toggle('hidden');
+  });
+  // Desktop hackathons click toggle (for touch devices)
+  document.querySelectorAll('.hackathons-trigger > button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      this.closest('.hackathons-trigger').classList.toggle('sub-open');
+    });
+  });
+  // Close desktop hackathons dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    document.querySelectorAll('.hackathons-trigger').forEach(function(trigger) {
+      if (!trigger.contains(e.target)) {
+        trigger.classList.remove('sub-open');
+      }
+    });
+  });
+</script>

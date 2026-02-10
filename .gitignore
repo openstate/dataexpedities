@@ -21,3 +21,13 @@ output*.md
 # Agent files
 *AGENT*.*
 *CLAUDE*.*
+
+# Jekyll
+_site/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+
+# Node
+node_modules/
+api/node_modules/

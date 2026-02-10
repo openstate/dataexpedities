@@ -1,0 +1,106 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page.title }}</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'de-bg': '#f2e9e7',
+          'de-purple': '#5d00ff',
+          'de-purple-light': 'rgba(93, 0, 255, 0.06)',
+          'de-black-light': 'rgba(0, 0, 0, 0.06)',
+        },
+        fontFamily: {
+          'sans': ['"Public Sans"', 'sans-serif'],
+          'mono': ['"IBM Plex Mono"', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+<style>
+  .dash-line {
+    width: 74px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .connect-t-vertical {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent 0%, black 50%, transparent 100%);
+  }
+  .connect-t-horizontal {
+    width: 20px;
+    height: 1px;
+    background: linear-gradient(to right, black 0%, transparent 100%);
+  }
+  .hackathons-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f2e9e7;
+    border: 1px solid rgba(26, 26, 26, 0.7);
+    min-width: 200px;
+    z-index: 40;
+    padding: 4px 0;
+  }
+  .hackathons-dropdown::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    height: 20px;
+  }
+  .hackathons-trigger:hover .hackathons-dropdown,
+  .hackathons-trigger.sub-open .hackathons-dropdown {
+    display: block;
+  }
+  .mobile-menu-panel {
+    display: none;
+  }
+  .mobile-menu-panel.open {
+    display: block;
+  }
+  .prose h1, .prose h2 {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 500;
+    color: #5d00ff;
+    font-size: 25px;
+    line-height: 31px;
+    margin-bottom: 16px;
+  }
+  .prose h3 {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    margin-bottom: 16px;
+  }
+  .prose p {
+    font-size: 16px;
+    line-height: 31px;
+    margin-bottom: 20px;
+  }
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    font-size: 16px;
+    line-height: 31px;
+    margin-bottom: 20px;
+  }
+  .prose a {
+    color: #5d00ff;
+    text-decoration: underline;
+  }
+  .prose strong {
+    font-weight: 700;
+  }
+  {% if page.extra_css %}{{ page.extra_css }}{% endif %}
+</style>

@@ -1,0 +1,87 @@
+<script>
+  (function() {
+    var container = document.getElementById('matrix-pattern');
+    if (!container) return;
+    var svg = container.querySelector('svg');
+    if (!svg) return;
+
+    var NS = 'http://www.w3.org/2000/svg';
+    var H = 713;
+    var W = 83;
+
+    // Clear static paths (they serve as no-JS fallback)
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+    // Gradient mask: bars fade in at top, full in middle, fade out at bottom
+    var defs = document.createElementNS(NS, 'defs');
+
+    var grad = document.createElementNS(NS, 'linearGradient');
+    grad.setAttribute('id', 'matrix-fade');
+    grad.setAttribute('x1', '0');
+    grad.setAttribute('y1', '0');
+    grad.setAttribute('x2', '0');
+    grad.setAttribute('y2', '1');
+    [[0, 0], [0.04, 1], [0.5, 1], [1, 0]].forEach(function(s) {
+      var stop = document.createElementNS(NS, 'stop');
+      stop.setAttribute('offset', s[0]);
+      stop.setAttribute('stop-color', 'white');
+      stop.setAttribute('stop-opacity', s[1]);
+      grad.appendChild(stop);
+    });
+    defs.appendChild(grad);
+
+    var mask = document.createElementNS(NS, 'mask');
+    mask.setAttribute('id', 'matrix-mask');
+    var maskRect = document.createElementNS(NS, 'rect');
+    maskRect.setAttribute('width', W);
+    maskRect.setAttribute('height', H);
+    maskRect.setAttribute('fill', 'url(#matrix-fade)');
+    mask.appendChild(maskRect);
+    defs.appendChild(mask);
+
+    svg.appendChild(defs);
+
+    // Masked group — all bars live here
+    var g = document.createElementNS(NS, 'g');
+    g.setAttribute('mask', 'url(#matrix-mask)');
+    svg.appendChild(g);
+
+    // Column positions — spaced 3-4x bar-width apart
+    var cols = [
+      [0,2],[10,2],[20,2],[31,2],[42,2],[53,2],[64,2],[75,2]
+    ];
+
+    var COUNT = 90;
+
+    function rand(min, max) { return min + Math.random() * (max - min); }
+
+    // Create bars with native SVG animation (GPU-accelerated, crisp)
+    for (var i = 0; i < COUNT; i++) {
+      var c = cols[Math.floor(Math.random() * cols.length)];
+      var h = rand(6, 22);
+      var dur = rand(38, 138);          // 35% slower (was 25-90)
+      var begin = -rand(0, dur);         // stagger so bars are spread out on load
+      var opacity = rand(0.45, 0.75);    // varied opacity for depth
+      var isPurple = Math.random() < 0.03;
+
+      var rect = document.createElementNS(NS, 'rect');
+      rect.setAttribute('x', c[0]);
+      rect.setAttribute('width', c[1]);
+      rect.setAttribute('height', h);
+      rect.setAttribute('fill', isPurple ? '#5D00FF' : '#515151');
+      rect.setAttribute('fill-opacity', isPurple ? rand(0.75, 0.95).toFixed(2) : opacity.toFixed(2));
+
+      // Native SVG animateTransform: translates from above viewport to below
+      var anim = document.createElementNS(NS, 'animateTransform');
+      anim.setAttribute('attributeName', 'transform');
+      anim.setAttribute('type', 'translate');
+      anim.setAttribute('values', '0 ' + (-h) + '; 0 ' + (H + h));
+      anim.setAttribute('dur', dur + 's');
+      anim.setAttribute('begin', begin.toFixed(2) + 's');
+      anim.setAttribute('repeatCount', 'indefinite');
+
+      rect.appendChild(anim);
+      g.appendChild(rect);
+    }
+  })();
+</script>

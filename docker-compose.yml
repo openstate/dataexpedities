@@ -1,0 +1,11 @@
+services:
+  web:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - FROM_EMAIL=${FROM_EMAIL}
+      - PORT=3000
+    restart: unless-stopped

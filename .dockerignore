@@ -1,0 +1,8 @@
+_site
+.jekyll-cache
+.jekyll-metadata
+node_modules
+api/node_modules
+.git
+.env
+.DS_Store

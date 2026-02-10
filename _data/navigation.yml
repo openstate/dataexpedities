@@ -1,0 +1,37 @@
+main:
+  - label: AGENDA
+    url: /
+    page_id: index
+  - label: WORKSHOP
+    url: /workshop
+    page_id: workshop
+  - label: HACKATHONS
+    page_id: hackathons
+    children:
+      - label: "Hackathon #1 &mdash; Wonen"
+        url: /hackathon-wonen
+        page_id: hackathon-wonen
+      - label: "Hackathon #2 &mdash; Energie"
+        url: /hackathon-energie
+        page_id: hackathon-energie
+  - label: INFO
+    url: /overons
+    page_id: overons
+  - label: Aanmelden
+    url: /aanmeldformulier
+    page_id: aanmeldformulier
+    is_button: true
+
+footer:
+  - label: Agenda
+    url: /
+  - label: Workshop
+    url: /workshop
+  - label: "Hackathon #1 — Wonen"
+    url: /hackathon-wonen
+  - label: "Hackathon #2 — Energie"
+    url: /hackathon-energie
+  - label: Info
+    url: /overons
+  - label: Aanmelden
+    url: /aanmeldformulier
