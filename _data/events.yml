@@ -31,6 +31,15 @@ hackathon_wonen:
       - title: "&ldquo;De energetische kloof&rdquo; &mdash; Cross-referentie tussen energielabels en inkomenscategorie&euml;n"
         url: "#"
 
+workshop_2:
+  label: "WORKSHOP"
+  theme: "Machine-Assisted Investigations"
+  date_text: "Januari 2027"
+  location: "Nader te bepalen"
+  registration_open: false
+  bar_color: "black"
+  link: /workshop
+
 hackathon_energie:
   label: "HACKATHON #2"
   theme: "Energie"

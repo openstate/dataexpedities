@@ -71,4 +71,58 @@ nav_id: index
   </div>
 </div>
 
+<!-- ====== LINE SEPARATOR ====== -->
+{% include line-separator.html %}
+
+<div class="h-[55px]"></div>
+
+<!-- ====== WORKSHOP 2 EVENT SECTION ====== -->
+{% assign workshop2 = site.data.events.workshop_2 %}
+{% include event-bar.html event=workshop2 %}
+
+<!-- Workshop 2 content area -->
+<div class="ml-0 md:ml-[60px] lg:ml-[112px] bg-de-black-light">
+  <div class="px-4 md:px-8 lg:pl-[41px] lg:pr-10 py-7">
+    <div style="max-width: 612px;">
+      <p class="font-bold text-base leading-[31px] mb-5">Workshop over verantwoord gebruik van AI coding tools</p>
+      <ul class="list-disc pl-5 text-base leading-[31px]">
+        <li>Voor <strong class="font-bold">datajournalisten en programmeurs</strong> die gaan deelnemen aan de hackathon</li>
+        <li>Live software bouwen voor je onderzoek</li>
+        <li>Van idee naar werkende code in <strong class="font-bold">minuten in plaats van dagen</strong></li>
+        <li>Data-pipelines bouwen die verschillende bronnen combineren</li>
+      </ul>
+    </div>
+  </div>
+  <div class="px-4 md:px-8 lg:pl-[41px] pb-12">
+    <a href="{{ '/workshop' | relative_url }}" class="text-de-purple underline text-base leading-[31px]">&rarr; meer</a>
+  </div>
+</div>
+
+<!-- ====== LINE SEPARATOR ====== -->
+{% include line-separator.html %}
+
+<div class="h-[55px]"></div>
+
+<!-- ====== HACKATHON 2 EVENT SECTION ====== -->
+{% assign hackathon2 = site.data.events.hackathon_energie %}
+{% include event-bar.html event=hackathon2 %}
+
+<!-- Hackathon 2 content area -->
+<div class="ml-0 md:ml-[60px] lg:ml-[112px] bg-de-purple-light">
+  <div class="px-4 md:px-8 lg:pl-[33px] lg:pr-10 py-7">
+    <div style="max-width: 756px;">
+      <p class="font-bold text-base leading-[31px] mb-5">Intensieve hackathon van acht uur met 35 journalisten, developers en CBS-experts.</p>
+      <p class="text-base leading-[31px]">Het thema: de energietransitie. Wie draagt de lasten? Welke wijken profiteren van isolatiesubsidies en welke niet? Hoe verhouden energieprijzen zich tot inkomensniveaus per regio? Die data zit vol verhalen die niemand nog heeft verteld.</p>
+      <ul class="list-disc pl-5 text-base leading-[31px]">
+        <li>Voor <strong class="font-bold">journalisten, programmeurs</strong> en <strong class="font-bold">data-experts</strong></li>
+        <li>Combineer domeinkennis, journalistiek en tech</li>
+        <li>Werk samen om de basis voor een verhaal te bouwen</li>
+      </ul>
+    </div>
+  </div>
+  <div class="px-4 md:px-8 lg:pl-[41px] pb-12">
+    <a href="{{ '/hackathon-energie' | relative_url }}" class="text-de-purple underline text-base leading-[31px]">&rarr; meer</a>
+  </div>
+</div>
+
 <div class="h-[60px]"></div>
