@@ -1,6 +1,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ page.title }}</title>
+{% assign og_title = page.title | default: site.title %}
+{% assign og_description = page.description | default: site.description %}
+{% assign og_url = page.url | absolute_url %}
+{% assign og_image = site.url | append: site.baseurl | append: "/assets/og-image.png" %}
+{% assign og_image_square = site.url | append: site.baseurl | append: "/assets/og-image-square.png" %}
+<meta name="description" content="{{ og_description }}">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:title" content="{{ og_title }}">
+<meta property="og:description" content="{{ og_description }}">
+<meta property="og:url" content="{{ og_url }}">
+<meta property="og:image" content="{{ og_image }}">
+<meta property="og:image:width" content="1784">
+<meta property="og:image:height" content="936">
+<meta property="og:image" content="{{ og_image_square }}">
+<meta property="og:image:width" content="520">
+<meta property="og:image:height" content="520">
+<meta property="og:locale" content="nl_NL">
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title }}">
+<meta name="twitter:description" content="{{ og_description }}">
+<meta name="twitter:image" content="{{ og_image }}">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
