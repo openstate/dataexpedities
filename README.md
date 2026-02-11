@@ -8,7 +8,7 @@ Journalistieke hackathons met CBS data. Een initiatief van Stichting Momus, Open
 
 Two hackathons bringing together 35 journalists, developers and CBS experts to find stories in public data. This website provides event information, registration, and programme details.
 
-**Stack:** Jekyll (static site generation) + Express.js (form API with SendGrid) + Tailwind CSS (CDN)
+**Stack:** Jekyll (static site generation) + Express.js (form API with NocoDB) + Tailwind CSS (CDN)
 
 ## Structure
 
@@ -17,7 +17,7 @@ _config.yml              # Jekyll configuration
 _layouts/                # Page templates (default, page, hackathon, form)
 _includes/               # Reusable components (header, footer, event-bar, etc.)
 _data/                   # Event details (events.yml) and navigation (navigation.yml)
-api/                     # Express server + SendGrid registration endpoint
+api/                     # Express server + NocoDB registration endpoint
 assets/                  # SVG logos and illustrations
 ```
 
@@ -52,10 +52,10 @@ bundle exec jekyll build
 cd api && npm install && cd ..
 
 # Start the server
-PORT=4000 node api/server.js
+PORT=3000 node api/server.js
 ```
 
-The site will be available at `http://localhost:4000`.
+The site will be available at `http://localhost:3000`.
 
 For live-reload during development, run `bundle exec jekyll build --watch` in a separate terminal.
 
@@ -65,10 +65,11 @@ Copy `.env.example` to `.env` and fill in:
 
 | Variable | Description |
 |----------|-------------|
-| `SENDGRID_API_KEY` | SendGrid API key for sending registration emails |
-| `ADMIN_EMAIL` | Email address that receives registration submissions |
-| `FROM_EMAIL` | Sender email address (must be verified in SendGrid) |
+| `NOCODB_API_TOKEN` | NocoDB API token for registration storage |
+| `NOCODB_BASE_URL` | NocoDB instance URL (default: `https://YOUR_NOCODB_URL`) |
+| `NOCODB_TABLE_ID` | NocoDB table ID for registrations (default: `YOUR_TABLE_ID`) |
 | `PORT` | Server port (default: 3000) |
+| `SHOW_LAUNCH_PAGE` | Set to `ON` to show splash page with OG image only |
 
 ## Docker deployment
 
