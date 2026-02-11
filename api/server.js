@@ -1,11 +1,8 @@
 const express = require('express');
 const path = require('path');
-const sgMail = require('@sendgrid/mail');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -64,43 +61,49 @@ app.post('/api/register', async (req, res) => {
     return res.status(400).json({ error: 'Vul alle verplichte velden in (naam, email, functie, motivatie).' });
   }
 
-  const deelnameList = Array.isArray(deelname) ? deelname.join(', ') : (deelname || 'niet opgegeven');
+  const deelnameList = Array.isArray(deelname) ? deelname : (deelname ? [deelname] : []);
 
-  const emailBody = `
-Nieuwe aanmelding data/expedities
+  const rolMapping = {
+    'journalist': 'Journalist',
+    'datajournalist': 'Datajournalist',
+    'developer': 'Developer / Programmeur',
+    'data-analist': 'Data-analist',
+    'onderzoeker': 'Onderzoeker',
+    'anders': 'Anders',
+  };
 
-Persoonlijke gegevens:
-- Naam: ${naam}
-- E-mail: ${email}
-- Organisatie: ${organisatie || 'niet opgegeven'}
-- Telefoon: ${telefoon || 'niet opgegeven'}
-
-Profiel:
-- Rol: ${functie}
-
-Deelname:
-- ${deelnameList}
-
-Achtergrond:
-- Motivatie: ${motivatie}
-- Onderzoeksvragen: ${onderzoeksvragen || 'niet opgegeven'}
-
-Technische achtergrond:
-- ${technisch || 'niet opgegeven'}
-`.trim();
-
-  const msg = {
-    to: process.env.ADMIN_EMAIL,
-    from: process.env.FROM_EMAIL || process.env.ADMIN_EMAIL,
-    subject: `Aanmelding data/expedities: ${naam}`,
-    text: emailBody,
+  const record = {
+    'Naam': naam,
+    'Email': email,
+    'Organisatie / Medium': organisatie || null,
+    'Telefoonnummer': telefoon || null,
+    'Rol': rolMapping[functie] || functie,
+    'Deelname Hackathon #1': deelnameList.includes('hackathon'),
+    'Deelname workshop #1': deelnameList.includes('workshop'),
+    'Waarom wil je meedoen?': motivatie,
+    'Heb je al onderzoeksvragen of thema\'s in gedachten?': onderzoeksvragen || null,
+    'Technische achtergrond': technisch || null,
   };
 
   try {
-    await sgMail.send(msg);
+    const response = await fetch('https://YOUR_NOCODB_URL/api/v2/tables/YOUR_TABLE_ID/records', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'xc-token': process.env.NOCODB_API_TOKEN,
+      },
+      body: JSON.stringify(record),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('NocoDB error:', response.status, errorData);
+      throw new Error(errorData.message || 'NocoDB request failed');
+    }
+
     res.json({ success: true, message: 'Aanmelding ontvangen.' });
   } catch (error) {
-    console.error('SendGrid error:', error.response?.body || error.message);
+    console.error('Registration error:', error.message);
     res.status(500).json({ error: 'Er is iets misgegaan bij het versturen. Probeer het later opnieuw.' });
   }
 });

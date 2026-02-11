@@ -4,9 +4,7 @@ services:
     expose:
       - "3000"
     environment:
-      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
-      - ADMIN_EMAIL=${ADMIN_EMAIL}
-      - FROM_EMAIL=${FROM_EMAIL}
+      - NOCODB_API_TOKEN=${NOCODB_API_TOKEN}
       - PORT=3000
       - SHOW_LAUNCH_PAGE=${SHOW_LAUNCH_PAGE:-OFF}
     restart: unless-stopped
