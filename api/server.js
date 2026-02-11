@@ -3,6 +3,8 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || 'https://YOUR_NOCODB_URL';
+const NOCODB_TABLE_ID = process.env.NOCODB_TABLE_ID || 'YOUR_TABLE_ID';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -86,7 +88,7 @@ app.post('/api/register', async (req, res) => {
   };
 
   try {
-    const response = await fetch('https://YOUR_NOCODB_URL/api/v2/tables/YOUR_TABLE_ID/records', {
+    const response = await fetch(`${NOCODB_BASE_URL}/api/v2/tables/${NOCODB_TABLE_ID}/records`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
