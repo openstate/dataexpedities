@@ -17,7 +17,7 @@ main:
   - label: INFO
     url: /overons
     page_id: overons
-  - label: Aanmelden
+  - label: /AANMELDEN
     url: /aanmeldformulier
     page_id: aanmeldformulier
     is_button: true

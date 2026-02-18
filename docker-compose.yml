@@ -5,8 +5,8 @@ services:
       - "3000"
     environment:
       - NOCODB_API_TOKEN=${NOCODB_API_TOKEN}
-      - NOCODB_BASE_URL=${NOCODB_BASE_URL:-https://YOUR_NOCODB_URL}
-      - NOCODB_TABLE_ID=${NOCODB_TABLE_ID:-YOUR_TABLE_ID}
+      - NOCODB_BASE_URL=${NOCODB_BASE_URL}
+      - NOCODB_TABLE_ID=${NOCODB_TABLE_ID}
       - PORT=3000
       - SHOW_LAUNCH_PAGE=${SHOW_LAUNCH_PAGE:-OFF}
     restart: unless-stopped

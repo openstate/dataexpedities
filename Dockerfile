@@ -1,7 +1,5 @@
 # Stage 1: Build Jekyll site
-FROM ruby:3.3-slim AS builder
-
-RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/lists/*
+FROM ruby:3.3-bookworm AS builder
 
 WORKDIR /site
 COPY Gemfile Gemfile.lock ./

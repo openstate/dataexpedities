@@ -34,7 +34,7 @@
   <nav class="hidden md:flex absolute top-0 bottom-0 right-6 lg:right-[40px] z-30 items-center gap-[40px] lg:gap-[59px]">
     {% for item in site.data.navigation.main %}
       {% if item.is_button %}
-        <a href="{{ item.url | relative_url }}" class="bg-black text-white font-medium text-base px-4 py-[9px] hover:bg-de-purple transition-colors inline-flex items-center justify-center" style="width: 116px; height: 39px;">{{ item.label }}</a>
+        <a href="{{ item.url | relative_url }}" class="bg-black text-white font-mono font-medium text-base uppercase px-4 py-[9px] hover:bg-de-purple transition-colors inline-flex items-center justify-center tracking-wide">{{ item.label }}</a>
       {% elsif item.children %}
         {% assign is_parent_active = false %}
         {% if page.nav_id == item.page_id or page.nav_parent == item.page_id %}
@@ -64,7 +64,7 @@
         {% for item in site.data.navigation.main %}
           {% if item.is_button %}
             <div class="mt-6">
-              <a href="{{ item.url | relative_url }}" class="bg-black text-white font-medium text-base px-4 py-[9px] hover:bg-de-purple transition-colors inline-flex items-center justify-center" style="width: 116px; height: 39px;">{{ item.label }}</a>
+              <a href="{{ item.url | relative_url }}" class="bg-black text-white font-mono font-medium text-base uppercase px-4 py-[9px] hover:bg-de-purple transition-colors inline-flex items-center justify-center tracking-wide">{{ item.label }}</a>
             </div>
           {% elsif item.children %}
             <div class="border-b border-black/10">

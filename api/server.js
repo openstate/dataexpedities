@@ -3,8 +3,12 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL || 'https://YOUR_NOCODB_URL';
-const NOCODB_TABLE_ID = process.env.NOCODB_TABLE_ID || 'YOUR_TABLE_ID';
+const NOCODB_BASE_URL = process.env.NOCODB_BASE_URL;
+const NOCODB_TABLE_ID = process.env.NOCODB_TABLE_ID;
+
+if (!NOCODB_BASE_URL || !NOCODB_TABLE_ID) {
+  console.warn('Warning: NOCODB_BASE_URL and NOCODB_TABLE_ID must be set for registration to work.');
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

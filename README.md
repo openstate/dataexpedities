@@ -66,8 +66,8 @@ Copy `.env.example` to `.env` and fill in:
 | Variable | Description |
 |----------|-------------|
 | `NOCODB_API_TOKEN` | NocoDB API token for registration storage |
-| `NOCODB_BASE_URL` | NocoDB instance URL (default: `https://YOUR_NOCODB_URL`) |
-| `NOCODB_TABLE_ID` | NocoDB table ID for registrations (default: `YOUR_TABLE_ID`) |
+| `NOCODB_BASE_URL` | NocoDB instance URL (required) |
+| `NOCODB_TABLE_ID` | NocoDB table ID for registrations (required) |
 | `PORT` | Server port (default: 3000) |
 | `SHOW_LAUNCH_PAGE` | Set to `ON` to show splash page with OG image only |
 
