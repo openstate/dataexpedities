@@ -60,11 +60,11 @@ app.use(express.static(path.join(__dirname, '..', '_site')));
 
 // Registration API endpoint
 app.post('/api/register', async (req, res) => {
-  const { naam, email, organisatie, telefoon, functie, deelname, motivatie, onderzoeksvragen, technisch } = req.body;
+  const { naam, email, organisatie, functie, deelname, motivatie, onderzoeksvragen, technisch } = req.body;
 
   // Validate required fields
-  if (!naam || !email || !functie || !motivatie) {
-    return res.status(400).json({ error: 'Vul alle verplichte velden in (naam, email, functie, motivatie).' });
+  if (!email || !functie || !motivatie) {
+    return res.status(400).json({ error: 'Vul alle verplichte velden in (email, functie, motivatie).' });
   }
 
   const deelnameList = Array.isArray(deelname) ? deelname : (deelname ? [deelname] : []);
@@ -79,10 +79,9 @@ app.post('/api/register', async (req, res) => {
   };
 
   const record = {
-    'Naam': naam,
+    'Naam': naam || null,
     'Email': email,
     'Organisatie / Medium': organisatie || null,
-    'Telefoonnummer': telefoon || null,
     'Rol': rolMapping[functie] || functie,
     'Deelname Hackathon #1': deelnameList.includes('hackathon'),
     'Deelname workshop #1': deelnameList.includes('workshop'),

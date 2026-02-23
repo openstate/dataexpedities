@@ -6,7 +6,6 @@ nav_id: aanmeldformulier
 extra_css: |
   input[type="text"],
   input[type="email"],
-  input[type="tel"],
   textarea,
   select {
     background: white;
@@ -24,11 +23,10 @@ extra_css: |
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 18px center;
-    padding-right: 44px;
+    padding: 14px 44px 14px 18px;
   }
   input[type="text"]:focus,
   input[type="email"]:focus,
-  input[type="tel"]:focus,
   textarea:focus,
   select:focus {
     outline: none;
@@ -69,7 +67,7 @@ extra_css: |
         <p class="font-semibold text-base leading-[28px]">Workshop</p>
       </div>
       <div>
-        <p class="text-base leading-[28px]">10 april 2026, 11:00&ndash;15:00, Open State Foundation Amsterdam (voor tech-deelnemers)</p>
+        <p class="text-base leading-[28px]">10 april 2026, 10:00&ndash;14:00, Open State Foundation, Amsterdam (voor tech-deelnemers)</p>
       </div>
     </div>
     <div class="flex flex-col md:flex-row md:gap-8">
@@ -92,8 +90,8 @@ extra_css: |
       <legend class="font-mono font-medium text-de-purple text-[18px] leading-[24px] mb-5">Persoonlijke gegevens</legend>
       <div class="space-y-5 max-w-[480px]">
         <div>
-          <label class="field-label" for="naam">Naam *</label>
-          <input type="text" id="naam" name="naam" required>
+          <label class="field-label" for="naam">Naam</label>
+          <input type="text" id="naam" name="naam">
         </div>
         <div>
           <label class="field-label" for="email">E-mailadres *</label>
@@ -102,10 +100,6 @@ extra_css: |
         <div>
           <label class="field-label" for="organisatie">Organisatie / Medium</label>
           <input type="text" id="organisatie" name="organisatie">
-        </div>
-        <div>
-          <label class="field-label" for="telefoon">Telefoonnummer</label>
-          <input type="tel" id="telefoon" name="telefoon">
         </div>
       </div>
     </fieldset>
@@ -138,7 +132,7 @@ extra_css: |
         </label>
         <label class="flex items-start gap-3 cursor-pointer">
           <input type="checkbox" name="deelname" value="workshop" class="mt-1 accent-de-purple w-4 h-4">
-          <span class="text-base leading-[24px]">Workshop &mdash; 10 april 2026, Open State Foundation Amsterdam</span>
+          <span class="text-base leading-[24px]">Workshop &mdash; 10 april 2026, Open State Foundation, Amsterdam</span>
         </label>
       </div>
     </fieldset>
@@ -168,9 +162,10 @@ extra_css: |
     </fieldset>
 
     <!-- Submit -->
-    <div class="mb-10">
+    <div class="mb-4">
       <button type="submit" class="bg-de-purple text-white font-mono font-medium text-base uppercase px-8 py-3 hover:bg-black transition-colors cursor-pointer tracking-wide">/AANMELDEN</button>
     </div>
+    <p class="text-[13px] text-[#6e6e6e] mb-10">Op deze aanmelding is het <a href="https://openstate.eu/nl/privacy/" class="underline" target="_blank" rel="noopener">privacybeleid van Open State Foundation</a> van toepassing.</p>
 
   </form>
 </div>
@@ -201,7 +196,6 @@ extra_css: |
       naam: form.naam.value,
       email: form.email.value,
       organisatie: form.organisatie.value,
-      telefoon: form.telefoon.value,
       functie: form.functie.value,
       deelname: deelname,
       motivatie: form.motivatie.value,

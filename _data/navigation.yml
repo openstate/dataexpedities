@@ -8,12 +8,12 @@ main:
   - label: HACKATHONS
     page_id: hackathons
     children:
-      - label: "Hackathon #1 &mdash; Wonen"
-        url: /hackathon-wonen
-        page_id: hackathon-wonen
-      - label: "Hackathon #2 &mdash; Energie"
-        url: /hackathon-energie
-        page_id: hackathon-energie
+      - label: "Hackathon #1 &mdash; Wonen &amp; Energie"
+        url: /hackathon-1
+        page_id: hackathon-1
+      - label: "Hackathon #2"
+        url: /hackathon-2
+        page_id: hackathon-2
   - label: INFO
     url: /overons
     page_id: overons
@@ -27,10 +27,10 @@ footer:
     url: /
   - label: Workshop
     url: /workshop
-  - label: "Hackathon #1 — Wonen"
-    url: /hackathon-wonen
-  - label: "Hackathon #2 — Energie"
-    url: /hackathon-energie
+  - label: "Hackathon #1 — Wonen & Energie"
+    url: /hackathon-1
+  - label: "Hackathon #2"
+    url: /hackathon-2
   - label: Info
     url: /overons
   - label: Aanmelden

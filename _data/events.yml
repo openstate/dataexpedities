@@ -1,20 +1,20 @@
 workshop:
   label: "WORKSHOP"
   theme: "Machine-Assisted Investigations"
-  date_text: "4 + 8 april 2026"
-  location: "Online"
+  date_text: "10 april 2026, 10:00 - 14:00"
+  location: "Open State Foundation, Amsterdam"
   registration_open: true
   bar_color: "black"
   link: /workshop
 
 hackathon_wonen:
   label: "HACKATHON #1"
-  theme: "Wonen"
+  theme: "Wonen & Energie"
   date_text: "8 mei 2026"
   location: "CBS Hoofdkantoor Den Haag"
   registration_open: true
   bar_color: "purple"
-  link: /hackathon-wonen
+  link: /hackathon-1
   sidebar:
     datasets:
       - title: "Woonbase &mdash; Gedetailleerde data over woningvoorraad, transacties en verhuur op verschillende schaalniveaus"
@@ -23,12 +23,24 @@ hackathon_wonen:
         url: "#"
       - title: "Energielabels woningen &mdash; Dataset met energie-effici&euml;ntie gegevens gekoppeld aan woningkenmerken"
         url: "#"
+      - title: "Energieverbruik huishoudens &mdash; Gedetailleerde data over gas- en elektriciteitsverbruik per regio"
+        url: "#"
+      - title: "Energielabels en isolatiegraad &mdash; Dataset met isolatiekwaliteit van woningen gekoppeld aan locatie en eigendomstype"
+        url: "#"
+      - title: "Duurzame energie in Nederland &mdash; Data over opwek van zonne- en windenergie per gemeente"
+        url: "#"
     research:
       - title: "&ldquo;De verborgen woningcrisis&rdquo; &mdash; Onderzoek naar specifieke doelgroep dat gebruik maakte van CBS microdata om ongeziene patronen bloot te leggen"
         url: "#"
       - title: "&ldquo;Scheefwonen in kaart&rdquo; &mdash; Data-analyse die regionale verschillen visualiseerde"
         url: "#"
       - title: "&ldquo;De energetische kloof&rdquo; &mdash; Cross-referentie tussen energielabels en inkomenscategorie&euml;n"
+        url: "#"
+      - title: "&ldquo;De warmtepomp-kloof&rdquo; &mdash; Onderzoek dat aantoonde welke wijken wel en niet profiteren van subsidies"
+        url: "#"
+      - title: "&ldquo;Energiearmoede in beeld&rdquo; &mdash; Cross-analyse van energiekosten, isolatiegraad en inkomen"
+        url: "#"
+      - title: "&ldquo;De transitiewinnaars&rdquo; &mdash; Data-gedreven verhaal over gemeenten die de energietransitie sociaal rechtvaardig uitvoeren"
         url: "#"
 
 workshop_2:
@@ -42,24 +54,9 @@ workshop_2:
 
 hackathon_energie:
   label: "HACKATHON #2"
-  theme: "Energie"
+  theme: "Nader te bepalen"
   date_text: "Februari 2027"
   location: "CBS Hoofdkantoor Den Haag"
   registration_open: false
   bar_color: "purple"
-  link: /hackathon-energie
-  sidebar:
-    datasets:
-      - title: "Energieverbruik huishoudens &mdash; Gedetailleerde data over gas- en elektriciteitsverbruik per regio"
-        url: "#"
-      - title: "Energielabels en isolatiegraad &mdash; Dataset met isolatiekwaliteit van woningen gekoppeld aan locatie en eigendomstype"
-        url: "#"
-      - title: "Duurzame energie in Nederland &mdash; Data over opwek van zonne- en windenergie per gemeente"
-        url: "#"
-    research:
-      - title: "&ldquo;De warmtepomp-kloof&rdquo; &mdash; Onderzoek dat aantoonde welke wijken wel en niet profiteren van subsidies"
-        url: "#"
-      - title: "&ldquo;Energiearmoede in beeld&rdquo; &mdash; Cross-analyse van energiekosten, isolatiegraad en inkomen"
-        url: "#"
-      - title: "&ldquo;De transitiewinnaars&rdquo; &mdash; Data-gedreven verhaal over gemeenten die de energietransitie sociaal rechtvaardig uitvoeren"
-        url: "#"
+  link: /hackathon-2
