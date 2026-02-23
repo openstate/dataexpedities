@@ -1,5 +1,5 @@
 workshop:
-  label: "WORKSHOP"
+  label: "VOORBEREIDENDE WORKSHOP"
   theme: "Machine-Assisted Investigations"
   date_text: "10 april 2026, 10:00 - 14:00"
   location: "Open State Foundation, Amsterdam"
@@ -44,7 +44,7 @@ hackathon_wonen:
         url: "#"
 
 workshop_2:
-  label: "WORKSHOP"
+  label: "VOORBEREIDENDE WORKSHOP"
   theme: "Machine-Assisted Investigations"
   date_text: "Januari 2027"
   location: "Nader te bepalen"

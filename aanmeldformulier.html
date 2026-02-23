@@ -23,7 +23,7 @@ extra_css: |
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 18px center;
-    padding: 14px 44px 14px 18px;
+    padding: 16px 44px 16px 18px;
   }
   input[type="text"]:focus,
   input[type="email"]:focus,
@@ -50,24 +50,24 @@ extra_css: |
 ---
 
 <!-- Event info header -->
-<section class="pt-10 pb-8">
+<section class="pt-14 pb-8">
   <h2 class="font-mono font-medium text-de-purple text-[25px] leading-[31px] mb-6">Aanmelden</h2>
 
   <div class="space-y-4 mb-2">
+    <div class="flex flex-col md:flex-row md:gap-8">
+      <div class="md:w-[160px] shrink-0">
+        <p class="font-semibold text-base leading-[28px]">Voorbereidende workshop</p>
+      </div>
+      <div>
+        <p class="text-base leading-[28px]">10 april 2026, 10:00&ndash;14:00, Open State Foundation, Amsterdam (voor tech-deelnemers)</p>
+      </div>
+    </div>
     <div class="flex flex-col md:flex-row md:gap-8">
       <div class="md:w-[160px] shrink-0">
         <p class="font-semibold text-base leading-[28px]">Hackathon</p>
       </div>
       <div>
         <p class="text-base leading-[28px]">8 mei 2026, CBS Den Haag</p>
-      </div>
-    </div>
-    <div class="flex flex-col md:flex-row md:gap-8">
-      <div class="md:w-[160px] shrink-0">
-        <p class="font-semibold text-base leading-[28px]">Workshop</p>
-      </div>
-      <div>
-        <p class="text-base leading-[28px]">10 april 2026, 10:00&ndash;14:00, Open State Foundation, Amsterdam (voor tech-deelnemers)</p>
       </div>
     </div>
     <div class="flex flex-col md:flex-row md:gap-8">
@@ -127,12 +127,12 @@ extra_css: |
       <p class="text-[14px] text-[#6e6e6e] mb-4">Waar wil je aan deelnemen? *</p>
       <div class="space-y-3">
         <label class="flex items-start gap-3 cursor-pointer">
-          <input type="checkbox" name="deelname" value="hackathon" class="mt-1 accent-de-purple w-4 h-4">
-          <span class="text-base leading-[24px]">Hackathon &mdash; 8 mei 2026, CBS Den Haag</span>
+          <input type="checkbox" name="deelname" value="workshop" class="mt-1 accent-de-purple w-4 h-4">
+          <span class="text-base leading-[24px]">Voorbereidende workshop &mdash; 10 april 2026, Open State Foundation, Amsterdam</span>
         </label>
         <label class="flex items-start gap-3 cursor-pointer">
-          <input type="checkbox" name="deelname" value="workshop" class="mt-1 accent-de-purple w-4 h-4">
-          <span class="text-base leading-[24px]">Workshop &mdash; 10 april 2026, Open State Foundation, Amsterdam</span>
+          <input type="checkbox" name="deelname" value="hackathon" class="mt-1 accent-de-purple w-4 h-4">
+          <span class="text-base leading-[24px]">Hackathon &mdash; 8 mei 2026, CBS Den Haag</span>
         </label>
       </div>
     </fieldset>

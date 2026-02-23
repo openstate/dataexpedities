@@ -15,8 +15,8 @@ main:
         url: /hackathon-2
         page_id: hackathon-2
   - label: INFO
-    url: /overons
-    page_id: overons
+    url: /info
+    page_id: info
   - label: /AANMELDEN
     url: /aanmeldformulier
     page_id: aanmeldformulier
@@ -32,6 +32,6 @@ footer:
   - label: "Hackathon #2"
     url: /hackathon-2
   - label: Info
-    url: /overons
+    url: /info
   - label: Aanmelden
     url: /aanmeldformulier
