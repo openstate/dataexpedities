@@ -1,6 +1,6 @@
 workshop:
   label: "VOORBEREIDENDE WORKSHOP"
-  theme: "Machine-Assisted Investigations"
+  theme: "Machine-Accelerated Investigations"
   date_text: "10 april 2026, 10:00 - 14:00"
   location: "Open State Foundation, Amsterdam"
   registration_open: true
@@ -49,7 +49,7 @@ hackathon_wonen:
 
 workshop_2:
   label: "VOORBEREIDENDE WORKSHOP"
-  theme: "Machine-Assisted Investigations"
+  theme: "Machine-Accelerated Investigations"
   date_text: "Januari 2027"
   location: "Nader te bepalen"
   registration_open: false
