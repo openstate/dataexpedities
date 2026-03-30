@@ -4,6 +4,7 @@ workshop:
   date_text: "10 april 2026, 10:00 - 14:00"
   location: "Open State Foundation, Amsterdam"
   registration_open: true
+  registration_full: true
   bar_color: "black"
   link: /workshop
 

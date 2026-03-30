@@ -126,10 +126,16 @@ extra_css: |
       <legend class="font-mono font-medium text-de-purple text-[18px] leading-[24px] mb-5">Je deelname</legend>
       <p class="text-[14px] text-[#6e6e6e] mb-4">Waar wil je aan deelnemen? *</p>
       <div class="space-y-3">
-        <label class="flex items-start gap-3 cursor-pointer">
-          <input type="checkbox" name="deelname" value="workshop" class="mt-1 accent-de-purple w-4 h-4">
-          <span class="text-base leading-[24px]">Voorbereidende workshop &mdash; 10 april 2026, Open State Foundation, Amsterdam</span>
-        </label>
+        <div class="flex items-start gap-3">
+          <input type="checkbox" name="deelname" value="workshop" class="mt-1 w-4 h-4" disabled checked style="accent-color: #999;">
+          <div>
+            <span class="text-base leading-[24px] text-[#999]">Voorbereidende workshop &mdash; 10 april 2026, Open State Foundation, Amsterdam</span>
+            <span class="inline-block ml-2 text-[13px] font-mono font-medium uppercase text-[#999] border border-[#ccc] px-2 py-0.5 align-middle">VOL</span>
+            <div class="mt-1">
+              <button type="button" class="text-[14px] text-de-purple underline underline-offset-2 hover:text-black transition-colors bg-transparent border-0 cursor-pointer p-0 waitlist-trigger" data-event="VOORBEREIDENDE WORKSHOP">Inschrijven voor de wachtlijst &rarr;</button>
+            </div>
+          </div>
+        </div>
         <label class="flex items-start gap-3 cursor-pointer">
           <input type="checkbox" name="deelname" value="hackathon" class="mt-1 accent-de-purple w-4 h-4">
           <span class="text-base leading-[24px]">Hackathon &mdash; 8 mei 2026, CBS Den Haag</span>

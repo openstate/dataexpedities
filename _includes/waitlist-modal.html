@@ -1,0 +1,100 @@
+<!-- Waitlist modal -->
+<div id="waitlist-modal" class="fixed inset-0 z-50 hidden items-center justify-center">
+  <div class="absolute inset-0 bg-black/50" id="waitlist-backdrop"></div>
+  <div class="relative bg-de-bg border border-[#cecece] p-8 max-w-[420px] w-[calc(100%-2rem)] mx-4" id="waitlist-dialog">
+    <button type="button" id="waitlist-close" class="absolute top-4 right-4 text-black/60 hover:text-black text-2xl leading-none bg-transparent border-0 cursor-pointer p-0">&times;</button>
+    <h3 class="font-mono font-medium text-de-purple text-[18px] leading-[24px] mb-2">Wachtlijst</h3>
+    <p class="text-[14px] text-[#6e6e6e] mb-5" id="waitlist-event-label"></p>
+    <form id="waitlist-form" class="space-y-4">
+      <input type="hidden" id="waitlist-event-name" name="event_name">
+      <div>
+        <label class="block font-semibold text-[14px] mb-1" for="waitlist-naam">Naam</label>
+        <input type="text" id="waitlist-naam" name="naam" class="w-full bg-white border border-[#cecece] px-4 py-3 text-base font-mono transition-colors focus:outline-none focus:border-de-purple" style="box-sizing:border-box;">
+      </div>
+      <div>
+        <label class="block font-semibold text-[14px] mb-1" for="waitlist-email">E-mailadres *</label>
+        <input type="email" id="waitlist-email" name="email" required class="w-full bg-white border border-[#cecece] px-4 py-3 text-base font-mono transition-colors focus:outline-none focus:border-de-purple" style="box-sizing:border-box;">
+      </div>
+      <button type="submit" id="waitlist-submit" class="bg-de-purple text-white font-mono font-medium text-base uppercase px-6 py-3 hover:bg-black transition-colors cursor-pointer tracking-wide border-0">/INSCHRIJVEN</button>
+    </form>
+    <div id="waitlist-success" class="hidden">
+      <div class="bg-de-purple-light border-l-4 border-de-purple px-5 py-5">
+        <p class="font-semibold text-base mb-1">Je staat op de wachtlijst!</p>
+        <p class="text-[14px] text-[#6e6e6e]">We nemen contact met je op als er een plek vrijkomt.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var modal = document.getElementById('waitlist-modal');
+  if (!modal) return;
+  var form = document.getElementById('waitlist-form');
+  var backdrop = document.getElementById('waitlist-backdrop');
+  var closeBtn = document.getElementById('waitlist-close');
+  var success = document.getElementById('waitlist-success');
+
+  function openModal(eventName) {
+    document.getElementById('waitlist-event-name').value = eventName;
+    document.getElementById('waitlist-event-label').textContent = eventName + ' is vol. Schrijf je in voor de wachtlijst:';
+    form.classList.remove('hidden');
+    success.classList.add('hidden');
+    form.reset();
+    document.getElementById('waitlist-event-name').value = eventName;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.getElementById('waitlist-email').focus();
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+
+  document.querySelectorAll('.waitlist-trigger').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      openModal(this.getAttribute('data-event'));
+    });
+  });
+
+  backdrop.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('waitlist-submit');
+    btn.disabled = true;
+    btn.textContent = 'Bezig...';
+
+    fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        naam: document.getElementById('waitlist-naam').value,
+        email: document.getElementById('waitlist-email').value,
+        event_name: document.getElementById('waitlist-event-name').value
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(result) {
+      if (result.success) {
+        form.classList.add('hidden');
+        success.classList.remove('hidden');
+      } else {
+        alert(result.error || 'Er is iets misgegaan.');
+        btn.disabled = false;
+        btn.textContent = '/INSCHRIJVEN';
+      }
+    })
+    .catch(function() {
+      alert('Er is iets misgegaan. Probeer het later opnieuw.');
+      btn.disabled = false;
+      btn.textContent = '/INSCHRIJVEN';
+    });
+  });
+})();
+</script>

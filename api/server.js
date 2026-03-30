@@ -113,6 +113,45 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+// Waitlist API endpoint
+const NOCODB_WAITLIST_TABLE_ID = process.env.NOCODB_WAITLIST_TABLE_ID || 'mkichklpyr0re83';
+
+app.post('/api/waitlist', async (req, res) => {
+  const { naam, email, event_name } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'E-mailadres is verplicht.' });
+  }
+
+  const record = {
+    'Naam': naam || null,
+    'Email': email,
+    'Evenement': event_name || null,
+  };
+
+  try {
+    const response = await fetch(`${NOCODB_BASE_URL}/api/v2/tables/${NOCODB_WAITLIST_TABLE_ID}/records`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'xc-token': process.env.NOCODB_API_TOKEN,
+      },
+      body: JSON.stringify(record),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('NocoDB waitlist error:', response.status, errorData);
+      throw new Error(errorData.message || 'NocoDB request failed');
+    }
+
+    res.json({ success: true, message: 'Je staat op de wachtlijst.' });
+  } catch (error) {
+    console.error('Waitlist error:', error.message);
+    res.status(500).json({ error: 'Er is iets misgegaan. Probeer het later opnieuw.' });
+  }
+});
+
 // SPA fallback: serve index.html for clean URLs
 app.get('*', (req, res) => {
   const reqPath = req.path.endsWith('/') ? req.path + 'index.html' : req.path + '/index.html';
