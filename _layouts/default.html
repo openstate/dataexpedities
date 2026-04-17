@@ -32,5 +32,21 @@
   {% include matrix-animation.html %}
 
   {% include waitlist-modal.html %}
+
+  <script>
+    (function() {
+      // Schakel event-bars met check_capacity om naar "vol / wachtlijst open" zodra de capaciteit bereikt is
+      if (!document.querySelector('.capacity-full')) return;
+      fetch('/api/registration-status')
+        .then(function(r) { return r.json(); })
+        .then(function(s) {
+          if (s && s.full) {
+            document.querySelectorAll('.capacity-open').forEach(function(el) { el.style.display = 'none'; });
+            document.querySelectorAll('.capacity-full').forEach(function(el) { el.style.display = ''; });
+          }
+        })
+        .catch(function() { /* stille fallback */ });
+    })();
+  </script>
 </body>
 </html>

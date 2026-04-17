@@ -1,10 +1,10 @@
 workshop:
-  label: "VOORBEREIDENDE WORKSHOP"
-  theme: "Machine-Accelerated Investigations"
+  label: "VOORBEREIDENDE WORKSHOP #1"
+  theme: "Machine-Accelerated Investigation"
   date_text: "10 april 2026, 10:00 - 14:00"
   location: "Open State Foundation, Amsterdam"
-  registration_open: true
-  registration_full: true
+  registration_open: false
+  past: true
   bar_color: "black"
   link: /workshop
 
@@ -14,6 +14,7 @@ hackathon_wonen:
   date_text: "8 mei 2026"
   location: "CBS Hoofdkantoor Den Haag"
   registration_open: true
+  check_capacity: true
   bar_color: "purple"
   link: /hackathon-1
   sidebar:
@@ -49,8 +50,8 @@ hackathon_wonen:
         url: "https://pointer.kro-ncrv.nl/gemeenten-leegstand-hoge-woningnood-veel-lege-winkels-winkels-hoe-jouw-buurt"
 
 workshop_2:
-  label: "VOORBEREIDENDE WORKSHOP"
-  theme: "Machine-Accelerated Investigations"
+  label: "VOORBEREIDENDE WORKSHOP #2"
+  theme: "Machine-Accelerated Investigation"
   date_text: "Januari 2027"
   location: "Nader te bepalen"
   registration_open: false

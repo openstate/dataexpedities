@@ -58,7 +58,30 @@ if (process.env.SHOW_LAUNCH_PAGE === 'ON') {
 // Serve Jekyll _site as static files
 app.use(express.static(path.join(__dirname, '..', '_site')));
 
-// Registration API endpoint
+const HACKATHON_CAPACITY = parseInt(process.env.HACKATHON_CAPACITY || '40', 10);
+const NOCODB_WAITLIST_TABLE_ID = process.env.NOCODB_WAITLIST_TABLE_ID || 'mkichklpyr0re83';
+
+async function fetchRegistrationCount() {
+  const response = await fetch(`${NOCODB_BASE_URL}/api/v2/tables/${NOCODB_TABLE_ID}/records/count`, {
+    headers: { 'xc-token': process.env.NOCODB_API_TOKEN },
+  });
+  if (!response.ok) throw new Error('Failed to fetch count');
+  const data = await response.json();
+  return data.count;
+}
+
+// Registration status endpoint (used by aanmeldformulier to decide UI mode)
+app.get('/api/registration-status', async (req, res) => {
+  try {
+    const count = await fetchRegistrationCount();
+    res.json({ count, capacity: HACKATHON_CAPACITY, full: count >= HACKATHON_CAPACITY });
+  } catch (error) {
+    console.error('Status error:', error.message);
+    res.status(500).json({ error: 'Kon status niet ophalen.' });
+  }
+});
+
+// Registration API endpoint — routes to waitlist table when hackathon is full
 app.post('/api/register', async (req, res) => {
   const { naam, email, organisatie, functie, deelname, motivatie, onderzoeksvragen, technisch } = req.body;
 
@@ -78,7 +101,24 @@ app.post('/api/register', async (req, res) => {
     'anders': 'Anders',
   };
 
-  const record = {
+  let isWaitlist = false;
+  try {
+    const count = await fetchRegistrationCount();
+    isWaitlist = count >= HACKATHON_CAPACITY;
+  } catch (error) {
+    console.error('Capacity check failed, falling through to registration:', error.message);
+  }
+
+  const targetTableId = isWaitlist ? NOCODB_WAITLIST_TABLE_ID : NOCODB_TABLE_ID;
+  const record = isWaitlist ? {
+    'Naam': naam || null,
+    'Email': email,
+    'Organisatie / Medium': organisatie || null,
+    'Rol': rolMapping[functie] || functie,
+    'Waarom wil je meedoen?': motivatie,
+    'Heb je al onderzoeksvragen of thema\'s in gedachten?': onderzoeksvragen || null,
+    'Technische achtergrond': technisch || null,
+  } : {
     'Naam': naam || null,
     'Email': email,
     'Organisatie / Medium': organisatie || null,
@@ -91,7 +131,7 @@ app.post('/api/register', async (req, res) => {
   };
 
   try {
-    const response = await fetch(`${NOCODB_BASE_URL}/api/v2/tables/${NOCODB_TABLE_ID}/records`, {
+    const response = await fetch(`${NOCODB_BASE_URL}/api/v2/tables/${targetTableId}/records`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -106,16 +146,18 @@ app.post('/api/register', async (req, res) => {
       throw new Error(errorData.message || 'NocoDB request failed');
     }
 
-    res.json({ success: true, message: 'Aanmelding ontvangen.' });
+    res.json({
+      success: true,
+      waitlist: isWaitlist,
+      message: isWaitlist ? 'Je staat op de wachtlijst.' : 'Aanmelding ontvangen.',
+    });
   } catch (error) {
     console.error('Registration error:', error.message);
     res.status(500).json({ error: 'Er is iets misgegaan bij het versturen. Probeer het later opnieuw.' });
   }
 });
 
-// Waitlist API endpoint
-const NOCODB_WAITLIST_TABLE_ID = process.env.NOCODB_WAITLIST_TABLE_ID || 'mkichklpyr0re83';
-
+// Waitlist API endpoint (used by event-bar waitlist button — minimal fields)
 app.post('/api/waitlist', async (req, res) => {
   const { naam, email, event_name } = req.body;
 
@@ -126,7 +168,6 @@ app.post('/api/waitlist', async (req, res) => {
   const record = {
     'Naam': naam || null,
     'Email': email,
-    'Evenement': event_name || null,
   };
 
   try {

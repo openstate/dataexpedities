@@ -41,27 +41,37 @@ extra_css: |
   .confirmation-message {
     display: none;
   }
+  .confirmation-message--waitlist {
+    display: none;
+  }
   .form-submitted .registration-form {
     display: none;
   }
-  .form-submitted .confirmation-message {
+  .form-submitted.submitted-waitlist .confirmation-message--waitlist {
+    display: block;
+  }
+  .form-submitted.submitted-hackathon .confirmation-message--hackathon {
+    display: block;
+  }
+  .waitlist-banner {
+    display: none;
+  }
+  .waitlist-mode .waitlist-banner {
     display: block;
   }
 ---
 
 <!-- Event info header -->
 <section class="pt-14 pb-8">
-  <h2 class="font-mono font-medium text-de-purple text-[25px] leading-[31px] mb-6">Aanmelden</h2>
+  <h2 id="form-heading" class="font-mono font-medium text-de-purple text-[25px] leading-[31px] mb-6">Aanmelden</h2>
+
+  <!-- VOL-banner (verschijnt zodra de hackathon vol is) -->
+  <div class="waitlist-banner mb-6 bg-de-purple text-white px-6 py-5 max-w-[720px]">
+    <p class="font-mono font-semibold text-[16px] uppercase tracking-wide mb-1">Hackathon vol</p>
+    <p class="text-base leading-[24px]">De 40 plekken voor de hackathon zijn vergeven. Je kunt je hieronder nog wel aanmelden voor de <strong>wachtlijst</strong> &mdash; vul dezelfde velden in en we laten weten zodra er een plek vrijkomt.</p>
+  </div>
 
   <div class="space-y-4 mb-2">
-    <div class="flex flex-col md:flex-row md:gap-8">
-      <div class="md:w-[160px] shrink-0">
-        <p class="font-semibold text-base leading-[28px]">Voorbereidende workshop</p>
-      </div>
-      <div>
-        <p class="text-base leading-[28px]">10 april 2026, 10:00&ndash;14:00, Open State Foundation, Amsterdam (voor tech-deelnemers)</p>
-      </div>
-    </div>
     <div class="flex flex-col md:flex-row md:gap-8">
       <div class="md:w-[160px] shrink-0">
         <p class="font-semibold text-base leading-[28px]">Hackathon</p>
@@ -121,28 +131,6 @@ extra_css: |
       </div>
     </fieldset>
 
-    <!-- Section: Je deelname -->
-    <fieldset class="mb-10">
-      <legend class="font-mono font-medium text-de-purple text-[18px] leading-[24px] mb-5">Je deelname</legend>
-      <p class="text-[14px] text-[#6e6e6e] mb-4">Waar wil je aan deelnemen? *</p>
-      <div class="space-y-3">
-        <div class="flex items-start gap-3">
-          <input type="checkbox" name="deelname" value="workshop" class="mt-1 w-4 h-4" disabled checked style="accent-color: #999;">
-          <div>
-            <span class="text-base leading-[24px] text-[#999]">Voorbereidende workshop &mdash; 10 april 2026, Open State Foundation, Amsterdam</span>
-            <span class="inline-block ml-2 text-[13px] font-mono font-medium uppercase text-[#999] border border-[#ccc] px-2 py-0.5 align-middle">VOL</span>
-            <div class="mt-1">
-              <button type="button" class="text-[14px] text-de-purple underline underline-offset-2 hover:text-black transition-colors bg-transparent border-0 cursor-pointer p-0 waitlist-trigger" data-event="VOORBEREIDENDE WORKSHOP">Inschrijven voor de wachtlijst &rarr;</button>
-            </div>
-          </div>
-        </div>
-        <label class="flex items-start gap-3 cursor-pointer">
-          <input type="checkbox" name="deelname" value="hackathon" class="mt-1 accent-de-purple w-4 h-4">
-          <span class="text-base leading-[24px]">Hackathon &mdash; 8 mei 2026, CBS Den Haag</span>
-        </label>
-      </div>
-    </fieldset>
-
     <!-- Section: Achtergrond -->
     <fieldset class="mb-10">
       <legend class="font-mono font-medium text-de-purple text-[18px] leading-[24px] mb-5">Achtergrond</legend>
@@ -169,41 +157,59 @@ extra_css: |
 
     <!-- Submit -->
     <div class="mb-4">
-      <button type="submit" class="bg-de-purple text-white font-mono font-medium text-base uppercase px-8 py-3 hover:bg-black transition-colors cursor-pointer tracking-wide">/AANMELDEN</button>
+      <button id="submit-btn" type="submit" class="bg-de-purple text-white font-mono font-medium text-base uppercase px-8 py-3 hover:bg-black transition-colors cursor-pointer tracking-wide">/AANMELDEN</button>
     </div>
     <p class="text-[13px] text-[#6e6e6e] mb-10">Op deze aanmelding is het <a href="https://openstate.eu/nl/privacy/" class="underline" target="_blank" rel="noopener">privacybeleid van Open State Foundation</a> van toepassing.</p>
 
   </form>
 </div>
 
-<!-- Confirmation message (shown after submit) -->
-<div class="confirmation-message pt-6 pb-16">
+<!-- Confirmation messages (shown after submit) -->
+<div class="confirmation-message confirmation-message--hackathon pt-6 pb-16">
   <div class="bg-de-purple-light border-l-4 border-de-purple px-6 py-8 max-w-[600px]">
     <p class="font-semibold text-[18px] leading-[28px] mb-3">Bedankt voor je aanmelding!</p>
     <p class="text-base leading-[28px]">We hebben je aanmelding ontvangen. Je ontvangt binnen enkele dagen een bevestiging per e-mail met verdere informatie over het programma.</p>
   </div>
 </div>
+<div class="confirmation-message confirmation-message--waitlist pt-6 pb-16">
+  <div class="bg-de-purple-light border-l-4 border-de-purple px-6 py-8 max-w-[600px]">
+    <p class="font-semibold text-[18px] leading-[28px] mb-3">Je staat op de wachtlijst!</p>
+    <p class="text-base leading-[28px]">De hackathon is vol, maar we hebben je gegevens ontvangen voor de wachtlijst. Zodra er een plek vrijkomt nemen we per e-mail contact met je op.</p>
+  </div>
+</div>
 
 
 <script>
+  var wrapper = document.getElementById('form-wrapper');
+  var heading = document.getElementById('form-heading');
+  var submitBtn = document.getElementById('submit-btn');
+  var submitLabel = '/AANMELDEN';
+
+  // Check of de hackathon vol is en pas de UI daarop aan
+  fetch('/api/registration-status')
+    .then(function(res) { return res.json(); })
+    .then(function(status) {
+      if (status && status.full) {
+        wrapper.classList.add('waitlist-mode');
+        heading.textContent = 'Aanmelden voor wachtlijst';
+        submitLabel = '/INSCHRIJVEN VOOR WACHTLIJST';
+        submitBtn.textContent = submitLabel;
+      }
+    })
+    .catch(function() { /* stille fallback: normale flow */ });
+
   document.getElementById('registration-form').addEventListener('submit', function(e) {
     e.preventDefault();
     var form = e.target;
-    var btn = form.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.textContent = 'Bezig met versturen...';
-
-    var deelname = [];
-    form.querySelectorAll('input[name="deelname"]:checked').forEach(function(cb) {
-      deelname.push(cb.value);
-    });
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Bezig met versturen...';
 
     var data = {
       naam: form.naam.value,
       email: form.email.value,
       organisatie: form.organisatie.value,
       functie: form.functie.value,
-      deelname: deelname,
+      deelname: ['hackathon'],
       motivatie: form.motivatie.value,
       onderzoeksvragen: form.onderzoeksvragen.value,
       technisch: form.technisch.value
@@ -217,18 +223,19 @@ extra_css: |
     .then(function(res) { return res.json(); })
     .then(function(result) {
       if (result.success) {
-        document.getElementById('form-wrapper').classList.add('form-submitted');
+        wrapper.classList.add('form-submitted');
+        wrapper.classList.add(result.waitlist ? 'submitted-waitlist' : 'submitted-hackathon');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         alert(result.error || 'Er is iets misgegaan. Probeer het later opnieuw.');
-        btn.disabled = false;
-        btn.textContent = '/AANMELDEN';
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitLabel;
       }
     })
     .catch(function() {
       alert('Er is iets misgegaan. Controleer je internetverbinding en probeer het opnieuw.');
-      btn.disabled = false;
-      btn.textContent = '/AANMELDEN';
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitLabel;
     });
   });
 </script>
