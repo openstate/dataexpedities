@@ -1,0 +1,45 @@
+<!-- Voortgangsbalk beschikbaarheid — gevuld via /api/registration-status.
+     Class-based zodat de balk meerdere keren per pagina kan voorkomen. -->
+<div class="capacity-meter max-w-[480px]" style="display:none">
+  <div class="flex items-baseline justify-between mb-2">
+    <span class="font-mono font-medium text-[14px] uppercase tracking-wide text-de-purple">Aanmeldingen</span>
+    <span class="font-mono text-[14px]"><span class="capacity-count">&ndash;</span> / <span class="capacity-total">&ndash;</span> plekken</span>
+  </div>
+  <div class="h-2.5 w-full bg-de-purple-light overflow-hidden">
+    <div class="capacity-fill h-full bg-de-purple transition-all duration-700 ease-out" style="width:0%"></div>
+  </div>
+  <p class="capacity-remaining font-mono text-[13px] text-[#6e6e6e] mt-2"></p>
+</div>
+
+<script>
+(function() {
+  if (window.__capacityMeterInit) return;
+  window.__capacityMeterInit = true;
+  function init() {
+    var meters = document.querySelectorAll('.capacity-meter');
+    if (!meters.length) return;
+    fetch('/api/registration-status')
+      .then(function(res) { return res.json(); })
+      .then(function(status) {
+        if (!status || typeof status.count !== 'number') return;
+        var count = status.count, total = status.capacity;
+        var remaining = Math.max(total - count, 0);
+        var pct = total > 0 ? Math.min(Math.round((count / total) * 100), 100) : 0;
+        Array.prototype.forEach.call(meters, function(meter) {
+          meter.querySelector('.capacity-count').textContent = count;
+          meter.querySelector('.capacity-total').textContent = total;
+          var rem = meter.querySelector('.capacity-remaining');
+          if (status.full) rem.textContent = 'De hackathon is vol — aanmelden kan nog voor de wachtlijst.';
+          else if (remaining === 1) rem.textContent = 'Nog 1 plek beschikbaar.';
+          else rem.textContent = 'Nog ' + remaining + ' plekken beschikbaar.';
+          meter.style.display = 'block';
+          var fill = meter.querySelector('.capacity-fill');
+          requestAnimationFrame(function() { fill.style.width = pct + '%'; });
+        });
+      })
+      .catch(function() { /* stille fallback */ });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

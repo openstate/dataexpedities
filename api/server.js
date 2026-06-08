@@ -61,8 +61,13 @@ app.use(express.static(path.join(__dirname, '..', '_site')));
 const HACKATHON_CAPACITY = parseInt(process.env.HACKATHON_CAPACITY || '40', 10);
 const NOCODB_WAITLIST_TABLE_ID = process.env.NOCODB_WAITLIST_TABLE_ID || 'mkichklpyr0re83';
 
+// Only count participants who registered for Hackathon #1
+// (field id c5r06uetdkx7rkc = "Deelname Hackathon #1" set to true).
+const HACKATHON_DEELNAME_FIELD = 'c5r06uetdkx7rkc';
+
 async function fetchRegistrationCount() {
-  const response = await fetch(`${NOCODB_BASE_URL}/api/v2/tables/${NOCODB_TABLE_ID}/records/count`, {
+  const where = encodeURIComponent(`(${HACKATHON_DEELNAME_FIELD},eq,true)`);
+  const response = await fetch(`${NOCODB_BASE_URL}/api/v2/tables/${NOCODB_TABLE_ID}/records/count?where=${where}`, {
     headers: { 'xc-token': process.env.NOCODB_API_TOKEN },
   });
   if (!response.ok) throw new Error('Failed to fetch count');

@@ -11,7 +11,7 @@ workshop:
 hackathon_wonen:
   label: "HACKATHON #1"
   theme: "Wonen & Energie"
-  date_text: "8 mei 2026"
+  date_text: "1 juli 2026"
   location: "CBS Hoofdkantoor Den Haag"
   registration_open: true
   check_capacity: true
