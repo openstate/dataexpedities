@@ -59,6 +59,10 @@ extra_css: |
   .waitlist-mode .waitlist-banner {
     display: block;
   }
+  /* Geen plekken meer? Verberg de "Neem een collega mee"-oproep. */
+  .waitlist-mode .invite-cta {
+    display: none;
+  }
 ---
 
 <!-- Event info header -->
@@ -77,7 +81,7 @@ extra_css: |
         <p class="font-semibold text-base leading-[28px]">Hackathon</p>
       </div>
       <div>
-        <p class="text-base leading-[28px]">8 mei 2026, CBS Den Haag</p>
+        <p class="text-base leading-[28px]">1 juli 2026, CBS Den Haag</p>
       </div>
     </div>
     <div class="flex flex-col md:flex-row md:gap-8">
@@ -88,6 +92,18 @@ extra_css: |
         <p class="text-base leading-[28px]">Geen, inclusief catering</p>
       </div>
     </div>
+  </div>
+
+  <!-- Beschikbaarheid: voortgangsbalk (gevuld via /api/registration-status) -->
+  <div id="capacity-meter" class="mt-7 max-w-[480px]" style="display:none">
+    <div class="flex items-baseline justify-between mb-2">
+      <span class="font-mono font-medium text-[14px] uppercase tracking-wide text-de-purple">Aanmeldingen</span>
+      <span class="font-mono text-[14px]"><span id="capacity-count">&ndash;</span> / <span id="capacity-total">&ndash;</span> plekken</span>
+    </div>
+    <div class="h-2.5 w-full bg-de-purple-light overflow-hidden">
+      <div id="capacity-fill" class="h-full bg-de-purple transition-all duration-700 ease-out" style="width:0%"></div>
+    </div>
+    <p id="capacity-remaining" class="font-mono text-[13px] text-[#6e6e6e] mt-2"></p>
   </div>
 </section>
 
@@ -170,6 +186,16 @@ extra_css: |
     <p class="font-semibold text-[18px] leading-[28px] mb-3">Bedankt voor je aanmelding!</p>
     <p class="text-base leading-[28px]">We hebben je aanmelding ontvangen. Je ontvangt binnen enkele dagen een bevestiging per e-mail met verdere informatie over het programma.</p>
   </div>
+
+  <!-- CTA: nodig collega's uit (verborgen zodra de hackathon vol is) -->
+  <div class="invite-cta mt-6 border border-de-purple px-6 py-8 max-w-[600px]">
+    <p class="font-mono font-medium text-de-purple text-[18px] leading-[24px] uppercase mb-3">Neem een collega mee</p>
+    <p class="text-base leading-[28px] mb-5">Er zijn nog plekken vrij. De beste teams ontstaan als journalisten, developers en data-experts elkaar tegenkomen &mdash; dus ken je iemand die hierbij past? Nodig ze uit.</p>
+    <div class="flex flex-col sm:flex-row gap-3">
+      <a href="mailto:?subject=Doe%20je%20mee%20met%20de%20CBS%20data-expeditie%3F&body=Hoi%2C%0A%0AIk%20heb%20me%20net%20aangemeld%20voor%20de%20data-expeditie%20hackathon%20op%201%20juli%20bij%20het%20CBS%20in%20Den%20Haag.%20We%20kraken%20samen%20verhalen%20uit%20CBS-data%20over%20wonen%20en%20energie%20%E2%80%94%20lijkt%20me%20echt%20iets%20voor%20jou.%0A%0AAanmelden%20kan%20hier%3A%20https%3A%2F%2Fdataexpedities.nl%2Faanmeldformulier%0A%0AGroet" class="bg-de-purple text-white font-mono font-medium text-base uppercase px-6 py-3 hover:bg-black transition-colors inline-flex items-center justify-center tracking-wide">/NODIG EEN COLLEGA UIT</a>
+      <button type="button" id="copy-link-btn" class="border border-de-purple text-de-purple font-mono font-medium text-base uppercase px-6 py-3 hover:bg-de-purple hover:text-white transition-colors inline-flex items-center justify-center tracking-wide cursor-pointer">/KOPIEER LINK</button>
+    </div>
+  </div>
 </div>
 <div class="confirmation-message confirmation-message--waitlist pt-6 pb-16">
   <div class="bg-de-purple-light border-l-4 border-de-purple px-6 py-8 max-w-[600px]">
@@ -189,7 +215,31 @@ extra_css: |
   fetch('/api/registration-status')
     .then(function(res) { return res.json(); })
     .then(function(status) {
-      if (status && status.full) {
+      if (!status || typeof status.count !== 'number') return;
+
+      // Voortgangsbalk vullen
+      var meter = document.getElementById('capacity-meter');
+      var count = status.count;
+      var total = status.capacity;
+      var remaining = Math.max(total - count, 0);
+      var pct = total > 0 ? Math.min(Math.round((count / total) * 100), 100) : 0;
+
+      document.getElementById('capacity-count').textContent = count;
+      document.getElementById('capacity-total').textContent = total;
+      var fill = document.getElementById('capacity-fill');
+      var remainingEl = document.getElementById('capacity-remaining');
+      if (status.full) {
+        remainingEl.textContent = 'De hackathon is vol — aanmelden kan nog voor de wachtlijst.';
+      } else if (remaining === 1) {
+        remainingEl.textContent = 'Nog 1 plek beschikbaar.';
+      } else {
+        remainingEl.textContent = 'Nog ' + remaining + ' plekken beschikbaar.';
+      }
+      meter.style.display = 'block';
+      // Animatie: breedte na render zetten
+      requestAnimationFrame(function() { fill.style.width = pct + '%'; });
+
+      if (status.full) {
         wrapper.classList.add('waitlist-mode');
         heading.textContent = 'Aanmelden voor wachtlijst';
         submitLabel = '/INSCHRIJVEN VOOR WACHTLIJST';
@@ -238,4 +288,22 @@ extra_css: |
       submitBtn.textContent = submitLabel;
     });
   });
+
+  // Kopieer-link knop in de bevestiging
+  var copyBtn = document.getElementById('copy-link-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function() {
+      var shareUrl = 'https://dataexpedities.nl/aanmeldformulier';
+      var done = function() {
+        var original = copyBtn.textContent;
+        copyBtn.textContent = '/GEKOPIEERD';
+        setTimeout(function() { copyBtn.textContent = original; }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(done).catch(function() { window.prompt('Kopieer de link:', shareUrl); });
+      } else {
+        window.prompt('Kopieer de link:', shareUrl);
+      }
+    });
+  }
 </script>
