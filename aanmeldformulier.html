@@ -4,20 +4,24 @@ title: "Aanmelden — data/expedities"
 description: "Meld je aan voor de data/expedities hackathon en workshop. Voor journalisten, developers en data-experts."
 nav_id: aanmeldformulier
 extra_css: |
-  input[type="text"],
-  input[type="email"],
-  textarea,
-  select {
+  .registration-form input[type="text"],
+  .registration-form input[type="email"],
+  .registration-form textarea,
+  .registration-form select {
     background: white;
     border: 1px solid #cecece;
     padding: 14px 18px;
     font-size: 16px;
     font-family: "IBM Plex Mono", monospace;
+    line-height: 1.5;
     width: 100%;
     transition: border-color 0.2s;
     box-sizing: border-box;
   }
-  select {
+  .registration-form textarea {
+    resize: vertical;
+  }
+  .registration-form select {
     appearance: none;
     -webkit-appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
@@ -25,10 +29,10 @@ extra_css: |
     background-position: right 18px center;
     padding: 16px 44px 16px 18px;
   }
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  textarea:focus,
-  select:focus {
+  .registration-form input[type="text"]:focus,
+  .registration-form input[type="email"]:focus,
+  .registration-form textarea:focus,
+  .registration-form select:focus {
     outline: none;
     border-color: #5d00ff;
   }
@@ -69,6 +73,12 @@ extra_css: |
 <section class="pt-14 pb-8">
   <h2 id="form-heading" class="font-mono font-medium text-de-purple text-[25px] leading-[31px] mb-6">Aanmelden</h2>
 
+  <!-- Gesloten-banner: hackathon #1 heeft plaatsgevonden -->
+  <div class="mb-6 bg-de-purple text-white px-6 py-5 max-w-[720px]">
+    <p class="font-mono font-semibold text-[16px] uppercase tracking-wide mb-1">Aanmelden gesloten</p>
+    <p class="text-base leading-[24px]">Hackathon #1 (Wonen &amp; Energie) heeft op <strong>1 juli 2026</strong> plaatsgevonden. Aanmelden is niet meer mogelijk. Doe mee met de <a href="{{ '/vooraanmelding' | relative_url }}" class="underline">vooraanmelding voor hackathon #2</a> (november 2026).</p>
+  </div>
+
   <!-- VOL-banner (verschijnt zodra de hackathon vol is) -->
   <div class="waitlist-banner mb-6 bg-de-purple text-white px-6 py-5 max-w-[720px]">
     <p class="font-mono font-semibold text-[16px] uppercase tracking-wide mb-1">Hackathon vol</p>
@@ -107,8 +117,8 @@ extra_css: |
   </div>
 </section>
 
-<!-- Registration form -->
-<div class="registration-form">
+<!-- Registration form — verborgen omdat hackathon #1 is geweest -->
+<div class="registration-form" style="display:none">
   <form id="registration-form" class="pb-10">
 
     <!-- Section: Persoonlijke gegevens -->

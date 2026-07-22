@@ -31,3 +31,9 @@ vendor/
 # Node
 node_modules/
 api/node_modules/
+
+# Lokale fallback voor formulierinzendingen (geen NocoDB)
+api/.submissions/
+
+# Lokale bundler-config
+.bundle/

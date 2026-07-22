@@ -24,6 +24,12 @@
     <div class="dash-line shrink-0 hidden md:block"></div>
     {% if evt.past %}
     <span class="shrink-0 border border-white/40 px-4 py-2 text-base font-mono font-medium uppercase inline-flex items-center justify-center tracking-wide text-white/70 cursor-default">HEEFT PLAATSGEVONDEN</span>
+    {% elsif evt.preregister %}
+    <a href="{{ evt.link | relative_url }}" class="shrink-0 border border-white px-4 py-2 text-base font-mono font-medium uppercase hover:bg-white {{ btn_hover }} transition-colors inline-flex items-center justify-center tracking-wide">/VOORAANMELDEN</a>
+    <div class="flex items-center gap-2 shrink-0">
+      <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
+      <span class="text-base font-normal">vooraanmelding open &mdash; datum volgt</span>
+    </div>
     {% elsif evt.registration_open and evt.registration_full %}
     <span class="shrink-0 border border-white/40 px-4 py-2 text-base font-mono font-medium uppercase inline-flex items-center justify-center tracking-wide text-white/40 cursor-default">VOL</span>
     <div class="flex items-center gap-2 shrink-0">

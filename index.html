@@ -1,57 +1,56 @@
 ---
 layout: default
 title: "data/expedities — journalistieke hackathons met CBS data"
-description: "Twee hackathons met 35 journalisten, developers en CBS-experts. We combineren CBS data en slimme tools om de basis te leggen voor nieuw journalistiek onderzoek."
+description: "De eerste hackathon was een succes: 35 journalisten, developers en CBS-experts kraakten samen verhalen uit CBS-data. De volgende editie komt eraan — meld je vast aan."
 nav_id: index
 ---
+
+<!-- ====== TEASER (kleine, speels geschikte foto's — klik om naar de galerij te scrollen) ====== -->
+<section class="pl-6 md:pl-[100px] lg:pl-[161px] pr-6 pt-8">
+  <a href="#fotos" class="group inline-flex items-center gap-4" aria-label="Bekijk de foto's van hackathon #1">
+    <span class="relative inline-flex items-center py-2">
+      <img src="{{ '/assets/hackathon-1/DSCF8911.jpeg' | relative_url }}" alt="Foto hackathon #1" class="w-16 h-16 md:w-20 md:h-20 object-cover shadow-md ring-2 ring-white rotate-[-8deg] group-hover:rotate-[-14deg] group-hover:-translate-y-0.5 transition-transform duration-300 relative z-10">
+      <img src="{{ '/assets/hackathon-1/DSCF8902.jpeg' | relative_url }}" alt="Foto hackathon #1" class="w-16 h-16 md:w-20 md:h-20 object-cover shadow-md ring-2 ring-white rotate-[4deg] -ml-5 group-hover:rotate-[0deg] group-hover:-translate-y-1 transition-transform duration-300 relative z-20">
+      <img src="{{ '/assets/hackathon-1/DSCF8876.jpeg' | relative_url }}" alt="Foto hackathon #1" class="w-16 h-16 md:w-20 md:h-20 object-cover shadow-md ring-2 ring-white rotate-[-3deg] -ml-5 group-hover:rotate-[9deg] group-hover:-translate-y-0.5 transition-transform duration-300 relative z-30">
+    </span>
+    <span class="font-mono font-medium text-de-purple text-[14px] underline underline-offset-2">bekijk de foto's van de laatste hackathon &darr;</span>
+  </a>
+</section>
 
 <!-- ====== HERO TEXT ====== -->
 <section class="pl-6 md:pl-[100px] lg:pl-[161px] pt-[43px] pb-[24px] pr-6" style="max-width: 1200px;">
   <p class="font-mono font-medium text-black text-[24px] leading-[32px] mb-3" style="letter-spacing: -0.01em;">
-    Twee hackathons met 35 journalisten, developers en CBS-experts.
+    Hackathons met journalisten, developers en CBS-experts.
   </p>
   <p class="text-base leading-[28px]">
-    We combineren CBS data en slimme tools die we ter plekke bouwen. We experimenteren, zoeken naar nieuwe verbanden en we leggen de basis voor nieuw journalistiek onderzoek. <strong class="font-bold">We kraken een verhaal.</strong>
+    Op 1 juli 2026 gingen 35 journalisten, developers en CBS-experts samen aan de slag met CBS-data over wonen en energie. We combineerden data en slimme tools die we ter plekke bouwden, en legden de basis voor nieuw journalistiek onderzoek. <strong class="font-bold">We kraakten een verhaal.</strong> En we gaan door: de volgende editie komt eraan &mdash; <a href="{{ '/vooraanmelding' | relative_url }}" class="text-de-purple underline">meld je vast aan</a>.
   </p>
 </section>
 
 <!-- ====== LOGOS SECTION ====== -->
 {% include logo-section.html %}
 
-<!-- Spacer before workshop -->
+<!-- Spacer before events -->
 <div class="h-[50px]"></div>
 
-<!-- ====== WORKSHOP EVENT SECTION (past) ====== -->
-{% assign workshop = site.data.events.workshop %}
-{% include event-bar.html event=workshop %}
+<!-- ====== HACKATHON #2 EVENT SECTION (nieuw, vooraanmelding) ====== -->
+{% assign hackathon_najaar = site.data.events.hackathon_najaar %}
+{% include event-bar.html event=hackathon_najaar %}
 
-<!-- ====== LINE SEPARATOR ====== -->
-{% include line-separator.html %}
-
-<div class="h-[55px]"></div>
-
-<!-- ====== HACKATHON EVENT SECTION ====== -->
-{% assign hackathon = site.data.events.hackathon_wonen %}
-{% include event-bar.html event=hackathon %}
-
-<!-- Hackathon content area -->
+<!-- Hackathon #2 content area -->
 <div class="ml-0 md:ml-[60px] lg:ml-[112px] bg-de-purple-light">
   <div class="px-4 md:px-8 lg:pl-[33px] lg:pr-10 py-7">
     <div style="max-width: 756px;">
-      <p class="font-bold text-base leading-[31px] mb-5">Intensieve hackathon met 35 journalisten, developers en CBS-experts.</p>
-      <p class="text-base leading-[31px]">We combineren CBS data en slimme tools die we ter plekke bouwen. We experimenteren, zoeken naar nieuwe verbanden en we leggen de basis voor nieuw journalistiek onderzoek. <strong class="font-bold">We kraken een verhaal.</strong></p>
-      <ul class="list-disc pl-5 text-base leading-[31px]">
-        <li>Voor <strong class="font-bold">journalisten, programmeurs</strong> en <strong class="font-bold">data-experts</strong></li>
-        <li>Combineer domeinkennis, journalistiek en tech</li>
-        <li>Werk samen om de basis voor een verhaal te bouwen</li>
-      </ul>
-      <p class="text-base leading-[31px] mt-5">De thema's: wonen en energie. Data over woningvoorraad per wijk, energielabels, transacties, energieverbruik en subsidies. Die data zit vol verhalen die niemand nog heeft verteld.</p>
-      <p class="text-base leading-[31px] mt-5 text-de-purple">De hackathon is verplaatst naar <strong class="font-bold">woensdag 1 juli</strong>. De geplande datum van 8 mei ging niet door vanwege een <a href="https://nos.nl/artikel/2613485-storingen-in-hele-land-door-brand-datacenter-almere-brand-onder-controle" class="underline" target="_blank" rel="noopener">brand in een datacenter</a> die de CBS-systemen uitschakelde. Inschrijvingen blijven staan en aanmelden kan weer.</p>
-      <div class="mt-7">{% include capacity-meter.html %}</div>
+      <p class="font-bold text-base leading-[31px] mb-5">Doe mee met de volgende hackathon &mdash; meld je nu vast aan.</p>
+      <p class="text-base leading-[31px]">We plannen een nieuwe hackathon voor <strong class="font-bold">november 2026</strong>. Het thema en de exacte datum staan nog niet vast: we inventariseren eerst wie er interesse heeft en welke thema's het meest zinvol zijn.</p>
+      <p class="text-base leading-[31px] mt-5">Met een <strong class="font-bold">vrijblijvende vooraanmelding</strong> laat je weten dat je erbij wilt zijn en denk je mee over het thema. Je zit nergens aan vast &mdash; zodra de datum en het thema bekend zijn, laten we het je als eerste weten.</p>
+    </div>
+    <div class="mt-7">
+      <a href="{{ '/vooraanmelding' | relative_url }}" class="bg-de-purple text-white font-mono font-medium text-base uppercase px-6 py-3 hover:bg-black transition-colors inline-flex items-center justify-center tracking-wide">/VOORAANMELDEN</a>
     </div>
   </div>
   <div class="px-4 md:px-8 lg:pl-[41px] pb-12">
-    <a href="{{ '/hackathon-1' | relative_url }}" class="text-de-purple underline text-base leading-[31px]">&rarr; meer</a>
+    <a href="{{ '/vooraanmelding' | relative_url }}" class="text-de-purple underline text-base leading-[31px]">&rarr; meer</a>
   </div>
 </div>
 
@@ -87,11 +86,11 @@ nav_id: index
 
 <div class="h-[55px]"></div>
 
-<!-- ====== HACKATHON 2 EVENT SECTION ====== -->
+<!-- ====== HACKATHON 3 EVENT SECTION ====== -->
 {% assign hackathon2 = site.data.events.hackathon_energie %}
 {% include event-bar.html event=hackathon2 %}
 
-<!-- Hackathon 2 content area -->
+<!-- Hackathon 3 content area -->
 <div class="ml-0 md:ml-[60px] lg:ml-[112px] bg-de-purple-light">
   <div class="px-4 md:px-8 lg:pl-[33px] lg:pr-10 py-7">
     <div style="max-width: 756px;">
@@ -105,6 +104,46 @@ nav_id: index
     </div>
   </div>
   <div class="px-4 md:px-8 lg:pl-[41px] pb-12">
-    <a href="{{ '/hackathon-2' | relative_url }}" class="text-de-purple underline text-base leading-[31px]">&rarr; meer</a>
+    <a href="{{ '/hackathon-3' | relative_url }}" class="text-de-purple underline text-base leading-[31px]">&rarr; meer</a>
+  </div>
+</div>
+
+<!-- ====== LINE SEPARATOR ====== -->
+{% include line-separator.html %}
+
+<div class="h-[80px]"></div>
+
+<!-- ====== GEBEURDE EVENTS (past, onderaan) ====== -->
+<h2 class="pl-6 md:pl-[100px] lg:pl-[161px] pr-6 font-mono font-medium text-de-past text-[20px] leading-[28px] mb-6">Geweest</h2>
+
+<!-- ====== WORKSHOP EVENT SECTION (past) ====== -->
+{% assign workshop = site.data.events.workshop %}
+{% include event-bar.html event=workshop %}
+
+<!-- ====== LINE SEPARATOR ====== -->
+{% include line-separator.html %}
+
+<div class="h-[55px]"></div>
+
+<!-- ====== HACKATHON #1 EVENT SECTION (past) ====== -->
+{% assign hackathon = site.data.events.hackathon_wonen %}
+{% include event-bar.html event=hackathon %}
+
+<!-- Hackathon #1 content area -->
+{% assign hackathon1 = site.data.events.hackathon_wonen %}
+<div class="ml-0 md:ml-[60px] lg:ml-[112px] bg-de-purple-light">
+  <div class="px-4 md:px-8 lg:pl-[33px] lg:pr-10 py-7">
+    <div style="max-width: 756px;">
+      <p class="font-bold text-base leading-[31px] mb-5">De eerste hackathon was een succes.</p>
+      <p class="text-base leading-[31px]">Op <strong class="font-bold">woensdag 1 juli 2026</strong> gingen 35 journalisten, developers en CBS-experts samen aan de slag in het CBS Hoofdkantoor in Den Haag. We combineerden CBS data en slimme tools die we ter plekke bouwden, zochten naar nieuwe verbanden en legden de basis voor nieuw journalistiek onderzoek. <strong class="font-bold">We kraakten een verhaal.</strong></p>
+      <p class="text-base leading-[31px] mt-5">De thema's waren wonen en energie: data over woningvoorraad per wijk, energielabels, transacties, energieverbruik en subsidies. De dag leverde scherpe onderzoeksvragen, eerste data-analyses en concrete plannen voor publicatie op.</p>
+    </div>
+    <!-- Fotogalerij hackathon #1 -->
+    <div id="fotos" class="mt-7 scroll-mt-24">
+      {% include photo-gallery.html photos=hackathon1.photos dir="/assets/hackathon-1/" alt="Hackathon #1 — data/expedities, 1 juli 2026" %}
+    </div>
+  </div>
+  <div class="px-4 md:px-8 lg:pl-[41px] pb-12">
+    <a href="{{ '/hackathon-1' | relative_url }}" class="text-de-purple underline text-base leading-[31px]">&rarr; meer</a>
   </div>
 </div>

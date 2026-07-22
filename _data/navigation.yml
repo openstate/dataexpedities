@@ -11,15 +11,18 @@ main:
       - label: "Hackathon #1 &mdash; Wonen &amp; Energie"
         url: /hackathon-1
         page_id: hackathon-1
-      - label: "Hackathon #2"
-        url: /hackathon-2
-        page_id: hackathon-2
+      - label: "Hackathon #2 &mdash; november 2026"
+        url: /vooraanmelding
+        page_id: vooraanmelding
+      - label: "Hackathon #3"
+        url: /hackathon-3
+        page_id: hackathon-3
   - label: INFO
     url: /info
     page_id: info
-  - label: /AANMELDEN
-    url: /aanmeldformulier
-    page_id: aanmeldformulier
+  - label: /VOORAANMELDEN
+    url: /vooraanmelding
+    page_id: vooraanmelding
     is_button: true
 
 footer:
@@ -29,9 +32,11 @@ footer:
     url: /workshop
   - label: "Hackathon #1 — Wonen & Energie"
     url: /hackathon-1
-  - label: "Hackathon #2"
-    url: /hackathon-2
+  - label: "Hackathon #2 — november 2026"
+    url: /vooraanmelding
+  - label: "Hackathon #3"
+    url: /hackathon-3
   - label: Info
     url: /info
-  - label: Aanmelden
-    url: /aanmeldformulier
+  - label: Vooraanmelden
+    url: /vooraanmelding

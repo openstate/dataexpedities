@@ -1,0 +1,208 @@
+---
+layout: form
+title: "Vooraanmelding hackathon #2 — data/expedities"
+description: "Vrijblijvende vooraanmelding voor de volgende data/expedities hackathon (november 2026). Thema en datum staan nog niet vast — we inventariseren interesse en thema's."
+nav_id: vooraanmelding
+extra_css: |
+  .registration-form input[type="text"],
+  .registration-form input[type="email"],
+  .registration-form textarea,
+  .registration-form select {
+    background: white;
+    border: 1px solid #cecece;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-family: "IBM Plex Mono", monospace;
+    line-height: 1.5;
+    width: 100%;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+  .registration-form textarea {
+    resize: vertical;
+  }
+  .registration-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    padding: 16px 44px 16px 18px;
+  }
+  .registration-form input[type="text"]:focus,
+  .registration-form input[type="email"]:focus,
+  .registration-form textarea:focus,
+  .registration-form select:focus {
+    outline: none;
+    border-color: #5d00ff;
+  }
+  label.field-label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .confirmation-message {
+    display: none;
+  }
+  .form-submitted .registration-form {
+    display: none;
+  }
+  .form-submitted .confirmation-message {
+    display: block;
+  }
+---
+
+<!-- Event info header -->
+<section class="pt-14 pb-8">
+  <h2 id="form-heading" class="font-mono font-medium text-de-purple text-[25px] leading-[31px] mb-6">Vooraanmelding hackathon #2</h2>
+
+  <!-- Vooraanmelding-uitleg -->
+  <div class="mb-6 bg-de-purple text-white px-6 py-5 max-w-[720px]">
+    <p class="font-mono font-semibold text-[16px] uppercase tracking-wide mb-1">Dit is een vooraanmelding</p>
+    <p class="text-base leading-[24px]">De volgende hackathon staat gepland voor <strong>november 2026</strong>, maar het <strong>thema en de exacte datum staan nog niet vast</strong>. We inventariseren eerst wie er interesse heeft en welke thema's het meest zinvol zijn. Je vooraanmelding is <strong>vrijblijvend</strong> &mdash; je zit nog nergens aan vast. Zodra datum en thema bekend zijn, nemen we contact met je op voor de definitieve aanmelding.</p>
+  </div>
+
+  <div class="space-y-4 mb-2">
+    <div class="flex flex-col md:flex-row md:gap-8">
+      <div class="md:w-[160px] shrink-0">
+        <p class="font-semibold text-base leading-[28px]">Wanneer</p>
+      </div>
+      <div>
+        <p class="text-base leading-[28px]">November 2026 &mdash; exacte datum volgt</p>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row md:gap-8">
+      <div class="md:w-[160px] shrink-0">
+        <p class="font-semibold text-base leading-[28px]">Thema</p>
+      </div>
+      <div>
+        <p class="text-base leading-[28px]">Nog te bepalen &mdash; denk mee!</p>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row md:gap-8">
+      <div class="md:w-[160px] shrink-0">
+        <p class="font-semibold text-base leading-[28px]">Kosten</p>
+      </div>
+      <div>
+        <p class="text-base leading-[28px]">Geen, inclusief catering</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pre-registration form -->
+<div class="registration-form">
+  <form id="preregister-form" class="pb-10">
+
+    <!-- Section: Persoonlijke gegevens -->
+    <fieldset class="mb-10">
+      <legend class="font-mono font-medium text-de-purple text-[18px] leading-[24px] mb-5">Persoonlijke gegevens</legend>
+      <div class="space-y-5 max-w-[480px]">
+        <div>
+          <label class="field-label" for="naam">Naam</label>
+          <input type="text" id="naam" name="naam">
+        </div>
+        <div>
+          <label class="field-label" for="email">E-mailadres *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+          <label class="field-label" for="organisatie">Organisatie / Medium</label>
+          <input type="text" id="organisatie" name="organisatie">
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Section: Je profiel -->
+    <fieldset class="mb-10">
+      <legend class="font-mono font-medium text-de-purple text-[18px] leading-[24px] mb-5">Je profiel</legend>
+      <div class="max-w-[480px]">
+        <label class="field-label" for="functie">Wat omschrijft jouw rol het beste? *</label>
+        <select id="functie" name="functie" required>
+          <option value="">Selecteer...</option>
+          <option value="journalist">Journalist</option>
+          <option value="datajournalist">Datajournalist</option>
+          <option value="developer">Developer / Programmeur</option>
+          <option value="data-analist">Data-analist</option>
+          <option value="onderzoeker">Onderzoeker</option>
+          <option value="anders">Anders</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <!-- Section: Thema's & achtergrond -->
+    <fieldset class="mb-10">
+      <legend class="font-mono font-medium text-de-purple text-[18px] leading-[24px] mb-5">Thema's &amp; achtergrond</legend>
+      <div class="space-y-5 max-w-[600px]">
+        <div>
+          <label class="field-label" for="onderzoeksvragen">Heb je al onderzoeksvragen of thema's in gedachten?</label>
+          <textarea id="onderzoeksvragen" name="onderzoeksvragen" rows="4" placeholder="Waar zou jij een volgende hackathon graag over zien gaan?"></textarea>
+        </div>
+        <div>
+          <label class="field-label" for="technisch">Technische achtergrond</label>
+          <textarea id="technisch" name="technisch" rows="4" placeholder="Beschrijf kort je ervaring met data-analyse, programmeren of AI-tools."></textarea>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Submit -->
+    <div class="mb-4">
+      <button id="submit-btn" type="submit" class="bg-de-purple text-white font-mono font-medium text-base uppercase px-8 py-3 hover:bg-black transition-colors cursor-pointer tracking-wide">/STUUR VOORAANMELDING</button>
+    </div>
+    <p class="text-[13px] text-[#6e6e6e] mb-10">Vrijblijvend &mdash; je verplicht je tot niets. Op deze vooraanmelding is het <a href="https://openstate.eu/nl/privacy/" class="underline" target="_blank" rel="noopener">privacybeleid van Open State Foundation</a> van toepassing.</p>
+
+  </form>
+</div>
+
+<!-- Confirmation message (shown after submit) -->
+<div class="confirmation-message pt-6 pb-16">
+  <div class="bg-de-purple-light border-l-4 border-de-purple px-6 py-8 max-w-[600px]">
+    <p class="font-semibold text-[18px] leading-[28px] mb-3">Bedankt voor je vooraanmelding!</p>
+    <p class="text-base leading-[28px]">We hebben je interesse genoteerd. Zodra de datum en het thema van hackathon #2 bekend zijn, nemen we per e-mail contact met je op voor de definitieve aanmelding. Je zit nog nergens aan vast.</p>
+  </div>
+</div>
+
+<script>
+  var wrapper = document.getElementById('form-wrapper');
+  var submitBtn = document.getElementById('submit-btn');
+  var submitLabel = '/STUUR VOORAANMELDING';
+
+  document.getElementById('preregister-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = e.target;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Bezig met versturen...';
+
+    var data = {
+      naam: form.naam.value,
+      email: form.email.value,
+      organisatie: form.organisatie.value,
+      functie: form.functie.value,
+      onderzoeksvragen: form.onderzoeksvragen.value,
+      technisch: form.technisch.value
+    };
+
+    fetch('/api/preregister', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(result) {
+      if (result.success) {
+        wrapper.classList.add('form-submitted');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert(result.error || 'Er is iets misgegaan. Probeer het later opnieuw.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitLabel;
+      }
+    })
+    .catch(function() {
+      alert('Er is iets misgegaan. Controleer je internetverbinding en probeer het opnieuw.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitLabel;
+    });
+  });
+</script>

@@ -1,5 +1,14 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+
+// Laad .env uit de projectroot (indien aanwezig). dotenv is optioneel:
+// bij deployment kunnen env-vars ook direct worden meegegeven (bv. docker-compose).
+try {
+  require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+} catch (e) {
+  console.warn('dotenv niet geladen (optioneel):', e.message);
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -60,6 +69,54 @@ app.use(express.static(path.join(__dirname, '..', '_site')));
 
 const HACKATHON_CAPACITY = parseInt(process.env.HACKATHON_CAPACITY || '40', 10);
 const NOCODB_WAITLIST_TABLE_ID = process.env.NOCODB_WAITLIST_TABLE_ID || 'mkichklpyr0re83';
+// Vooraanmeldingen voor hackathon #2 (november 2026) — aparte NocoDB-tabel.
+const NOCODB_PREREGISTER_TABLE_ID = process.env.NOCODB_PREREGISTER_TABLE_ID || 'mvaviytk173s944';
+
+const ROL_MAPPING = {
+  'journalist': 'Journalist',
+  'datajournalist': 'Datajournalist',
+  'developer': 'Developer / Programmeur',
+  'data-analist': 'Data-analist',
+  'onderzoeker': 'Onderzoeker',
+  'anders': 'Anders',
+};
+
+// Is NocoDB geconfigureerd? Zo niet, dan gebruiken we een lokale fallback zodat
+// formulieren ook zonder externe database werken (bv. lokaal draaien of demo).
+const NOCODB_CONFIGURED = !!(NOCODB_BASE_URL && process.env.NOCODB_API_TOKEN);
+const LOCAL_STORE_DIR = path.join(__dirname, '.submissions');
+
+// Schrijf een record naar NocoDB, of val terug op lokale opslag als NocoDB
+// niet is geconfigureerd. Gooit alleen bij een échte NocoDB-fout.
+async function persistRecord(tableId, record, localName) {
+  if (!NOCODB_CONFIGURED) {
+    try {
+      if (!fs.existsSync(LOCAL_STORE_DIR)) fs.mkdirSync(LOCAL_STORE_DIR, { recursive: true });
+      fs.appendFileSync(path.join(LOCAL_STORE_DIR, `${localName}.jsonl`), JSON.stringify(record) + '\n');
+      console.warn(`NocoDB niet geconfigureerd — ${localName} LOKAAL opgeslagen in api/.submissions/${localName}.jsonl (niet in NocoDB!)`);
+    } catch (e) {
+      console.error('Lokale opslag mislukt:', e.message);
+    }
+    return 'local';
+  }
+
+  const response = await fetch(`${NOCODB_BASE_URL}/api/v2/tables/${tableId}/records`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'xc-token': process.env.NOCODB_API_TOKEN,
+    },
+    body: JSON.stringify(record),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    console.error(`NocoDB error (tabel ${tableId}):`, response.status, JSON.stringify(errorData));
+    throw new Error(errorData.msg || errorData.message || 'NocoDB request failed');
+  }
+  console.log(`Record opgeslagen in NocoDB-tabel ${tableId}.`);
+  return 'nocodb';
+}
 
 // Only count participants who registered for Hackathon #1
 // (field id c5r06uetdkx7rkc = "Deelname Hackathon #1" set to true).
@@ -162,6 +219,33 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+// Pre-registration endpoint for hackathon #2 (november 2026).
+// Vrijblijvende vooraanmelding — schrijft naar een aparte NocoDB-tabel.
+app.post('/api/preregister', async (req, res) => {
+  const { naam, email, organisatie, functie, onderzoeksvragen, technisch } = req.body;
+
+  if (!email || !functie) {
+    return res.status(400).json({ error: 'Vul in elk geval je e-mailadres en rol in.' });
+  }
+
+  const record = {
+    'Naam': naam || null,
+    'Email': email,
+    'Organisatie / Medium': organisatie || null,
+    'Rol': ROL_MAPPING[functie] || functie,
+    'Heb je al onderzoeksvragen of thema\'s in gedachten?': onderzoeksvragen || null,
+    'Technische achtergrond': technisch || null,
+  };
+
+  try {
+    const stored = await persistRecord(NOCODB_PREREGISTER_TABLE_ID, record, 'preregistrations');
+    res.json({ success: true, stored: stored, message: 'Vooraanmelding ontvangen.' });
+  } catch (error) {
+    console.error('Preregister error:', error.message);
+    res.status(500).json({ error: 'Er is iets misgegaan bij het versturen. Probeer het later opnieuw.' });
+  }
+});
+
 // Waitlist API endpoint (used by event-bar waitlist button — minimal fields)
 app.post('/api/waitlist', async (req, res) => {
   const { naam, email, event_name } = req.body;
@@ -211,4 +295,10 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  if (NOCODB_CONFIGURED) {
+    console.log(`NocoDB geconfigureerd (${NOCODB_BASE_URL}). Vooraanmeldingen -> tabel ${NOCODB_PREREGISTER_TABLE_ID}.`);
+  } else {
+    console.warn('LET OP: NocoDB is NIET geconfigureerd (NOCODB_BASE_URL / NOCODB_API_TOKEN ontbreken).');
+    console.warn('Inzendingen worden LOKAAL bewaard in api/.submissions/ en komen NIET in NocoDB.');
+  }
 });
